@@ -15,7 +15,7 @@ public class ChargedPoint extends AbstractEvent {
     private Integer pointBalance;
 
     public ChargedPoint(User aggregate) {
-        super(aggregate);
+        super(aggregate);x`
     }
 
     public ChargedPoint() {
