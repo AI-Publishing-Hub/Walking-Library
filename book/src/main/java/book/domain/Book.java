@@ -1,10 +1,18 @@
 package book.domain;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class Book {
 
     @Id
@@ -16,22 +24,24 @@ public class Book {
     @Lob
     private String content;
 
+    private Long authorId;
+
     private Long viewCount;
 
+    @CreationTimestamp
     private LocalDateTime createdAt;
 
+    @UpdateTimestamp
     private LocalDateTime updatedAt;
 
     private Boolean isBookPublished;
-
-    private Integer price;
 
     private String bookCoverUrl;
 
     @Lob
     private String summary;
 
-    private Long authorId;
+    private Integer price;
 
     private Boolean isBestseller;
 }
