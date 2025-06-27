@@ -1,12 +1,10 @@
 package book.domain;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
+@Entity
 public class Book {
 
     @Id
@@ -32,8 +30,6 @@ public class Book {
 
     @Lob
     private String summary;
-
-    private Long bookReleaseAdminId;
 
     private Long authorId;
 
