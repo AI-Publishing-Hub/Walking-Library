@@ -13,7 +13,7 @@ tasks:
       # 2. Docker Compose를 사용해 Kafka와 Zookeeper를 백그라운드에서 실행합니다.
       docker-compose up -d
       echo "Waiting for Kafka to start..."
-      sleep 20 # Kafka가 완전히 시작될 때까지 20초 대기합니다.
+      sleep 30 # Kafka가 완전히 시작될 때까지 20초 대기합니다.
 
       # 3. Spring Boot 애플리케이션을 실행합니다.
       cd book
