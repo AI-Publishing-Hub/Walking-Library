@@ -14,35 +14,30 @@ spring:
   cloud:
     function:
       definition: bookEventConsumer;wheneverBookAccessRequested_CheckPolicy;wheneverBookAccessChecked_Route
-      # Consumer 역할을 하는 빈(Bean)의 이름을 지정합니다.
-      # 이전 단계에서 PolicyHandler에 'bookEventConsumer'로 만들었으므로 이름을 맞춰줍니다.
-#      definition: bookEventConsumer;bookEventProducer
     stream:
-      # 함수형 모델의 바인딩 설정
+      # 모든 통신은 'book.topic'이라는 단일 토픽을 사용하도록 통일합니다.
       bindings:
-        # 기존 Consumer
+        # 모든 이벤트를 로깅하는 컨슈머
         bookEventConsumer-in-0:
-          destination: event-in
+          destination: book.topic # <--- 'event-in'에서 수정
           group: book
           contentType: application/json
 
-        # wheneverBookAccessChecked_Route는 BookAccessChecked 타입의 이벤트만 받도록 필터링합니다.
+        # BookAccessChecked 이벤트만 필터링하는 컨슈머
         wheneverBookAccessChecked_Route-in-0:
           destination: book.topic
           group: book
           consumer:
-            # 이 필터링 조건을 추가합니다.
             condition: "headers['type']=='BookAccessChecked'"
 
-        # wheneverBookAccessRequested_CheckPolicy는 BookAccessRequested 타입의 이벤트만 받도록 필터링합니다.
-        # 이 바인딩이 명시적으로 없었다면 아래와 같이 추가해줍니다.
+        # BookAccessRequested 이벤트만 필터링하는 컨슈머
         wheneverBookAccessRequested_CheckPolicy-in-0:
           destination: book.topic
           group: book
           consumer:
-            # 이 필터링 조건을 추가합니다.
             condition: "headers['type']=='BookAccessRequested'"
 
+        # 모든 이벤트를 발행하는 프로듀서
         bookEventProducer-out-0:
           destination: book.topic
       kafka:
@@ -52,7 +47,6 @@ spring:
 ---
 # 'docker' 프로필 설정
 spring:
-  # 이 부분이 수정되었습니다.
   config:
     activate:
       on-profile: docker
@@ -60,18 +54,31 @@ spring:
     function:
       definition: bookEventConsumer;wheneverBookAccessRequested_CheckPolicy;wheneverBookAccessChecked_Route
     stream:
+      # 'default' 프로필과 동일하게 모든 바인딩을 설정하고, 토픽을 통일합니다.
       bindings:
         bookEventConsumer-in-0:
-          destination: event-in
+          destination: book.topic # <--- 수정 및 통일
           group: book
           contentType: application/json
+
+        wheneverBookAccessChecked_Route-in-0:
+          destination: book.topic # <--- 누락된 설정 추가
+          group: book
+          consumer:
+            condition: "headers['type']=='BookAccessChecked'"
+
+        wheneverBookAccessRequested_CheckPolicy-in-0:
+          destination: book.topic # <--- 누락된 설정 추가
+          group: book
+          consumer:
+            condition: "headers['type']=='BookAccessRequested'"
+
         bookEventProducer-out-0:
-          destination: event-out
+          destination: book.topic # <--- 수정 및 통일
       kafka:
         binder:
           # 쿠버네티스 내부 Kafka 서비스 주소
           brokers: my-kafka.kafka.svc.cluster.local:9092
-
 
 
 
