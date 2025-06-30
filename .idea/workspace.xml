@@ -16,12 +16,12 @@
     &quot;assignee&quot;: &quot;leehenson&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/AI-Publishing-Hub/Walking-Library.git",
-    "accountId": "ca2f011e-fa45-470b-b5fd-e02b2d623963"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/AI-Publishing-Hub/Walking-Library.git&quot;,
+    &quot;accountId&quot;: &quot;ca2f011e-fa45-470b-b5fd-e02b2d623963&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0
 }</component>
@@ -34,7 +34,7 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "book",
+    "git-widget-placeholder": "book__yunho",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/User/Walking-Library"
   }
