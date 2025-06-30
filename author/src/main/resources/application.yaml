@@ -5,6 +5,7 @@ spring:
   application:
     name: author
 
+  # ─── 내장 H2 DB ────────────────────────────────────────────────
   h2:
     console:
       enabled: true
@@ -23,6 +24,35 @@ spring:
       hibernate:
         format_sql: true
     show-sql: true
+
+  # ─── Kafka & Cloud Stream ────────────────────────────────────
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      # Kafka 트랜잭션 활성화 (ID prefix만 있으면 됨)
+      transaction-id-prefix: author-tx-
+      retries: 3
+      properties:
+        enable.idempotence: true    # Exactly-Once 보장
+    consumer:
+      auto-offset-reset: earliest
+
+  cloud:
+    stream:
+      default-binder: kafka
+      bindings:
+        # → “보내는 쪽”(StreamBridge 사용)을 위한 플레이스홀더
+        authorRequested-out-0:
+          destination: author.registration.requested
+        authorApproved-out-0:
+          destination: author.registration.approved
+        authorRejected-out-0:
+          destination: author.registration.rejected
+      kafka:
+        binder:
+          brokers: localhost:9092
+          configuration:
+            enable.idempotence: true
 
 logging:
   level:

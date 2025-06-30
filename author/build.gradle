@@ -48,6 +48,9 @@ dependencies {
 
 	// 테스트
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	implementation 'org.springframework.kafka:spring-kafka'   // (Stream 위에 얹어 트랜잭션 쓸 때)
+
 }
 
 test {
