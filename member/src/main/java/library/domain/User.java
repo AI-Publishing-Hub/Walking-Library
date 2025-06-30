@@ -1,8 +1,6 @@
-package member.src.main.java.library.domain;
+package library.domain;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.lang.annotation.Inherited;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Date;
@@ -19,8 +17,9 @@ import lombok.Data;
 @Entity
 @Table(name = "User_table")
 @Data
+//<<< DDD / Aggregate Root
+public class User {
 
-public class User{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -31,7 +30,7 @@ public class User{
 
     private String phoneNumber;
 
-    private role role;
+    private Role role;
 
     private SubscriptionStatus subscriptionStatus;
 
@@ -46,4 +45,48 @@ public class User{
     private Date updatedAt;
 
     private Boolean isKtVerified;
+
+    @PostPersist
+    public void onPostPersist() {
+        SignedUp signedUp = new SignedUp(this);
+        signedUp.publishAfterCommit();
+    }
+
+    public static UserRepository repository() {
+        UserRepository userRepository = MemberApplication.applicationContext.getBean(
+            UserRepository.class
+        );
+        return userRepository;
+    }
+
+    //<<< Clean Arch / Port Method
+    public static void consumePoints(BookViewed bookViewed) {
+        //implement business logic here:
+
+        /** Example 1:  new item 
+        User user = new User();
+        repository().save(user);
+
+        PointConsumed pointConsumed = new PointConsumed(user);
+        pointConsumed.publishAfterCommit();
+        */
+
+        /** Example 2:  finding and process
+        
+
+        repository().findById(bookViewed.get???()).ifPresent(user->{
+            
+            user // do something
+            repository().save(user);
+
+            PointConsumed pointConsumed = new PointConsumed(user);
+            pointConsumed.publishAfterCommit();
+
+        });
+        */
+
+    }
+    //>>> Clean Arch / Port Method
+
 }
+//>>> DDD / Aggregate Root

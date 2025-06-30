@@ -7,9 +7,7 @@ spring:
 ---
 
 spring:
-  config:
-    activate:
-      on-profile: default
+  profiles: default
   jpa:
     properties:
       hibernate:
@@ -32,14 +30,14 @@ spring:
       bindings:
         event-in:
           group: member
-          #<<< EDA / Topic Name
+#<<< EDA / Topic Name
           destination: library
-          #>>> EDA / Topic Name
+#>>> EDA / Topic Name
           contentType: application/json
         event-out:
-          #<<< EDA / Topic Name
+#<<< EDA / Topic Name
           destination: library
-          #>>> EDA / Topic Name
+#>>> EDA / Topic Name
           contentType: application/json
 
 logging:
@@ -49,14 +47,12 @@ logging:
 
 
 server:
-  port: 8080
+  port: 8082
 
 ---
 
 spring:
-  config:
-    activate:
-      on-profile: docker
+  profiles: docker
   jpa:
     properties:
       hibernate:
@@ -84,5 +80,4 @@ spring:
         event-out:
           destination: library
           contentType: application/json
-
 
