@@ -4,7 +4,8 @@ tasks:
   - name: Setup & Run Services
     init: |
       # 1. Gradle 빌드를 통해 의존성을 설치합니다.
-      ./gradlew build
+      ./book/gradle wrapper
+      ./book/gradlew build
     command: |
       # 2. Docker Compose를 사용해 Kafka와 Zookeeper를 백그라운드에서 실행합니다.
       docker-compose up -d
@@ -12,7 +13,7 @@ tasks:
       sleep 20 # Kafka가 완전히 시작될 때까지 20초 대기합니다.
 
       # 3. Spring Boot 애플리케이션을 실행합니다.
-      ./gradlew bootRun
+      ./book/gradlew bootRun
 
 ports:
   # Spring Boot 애플리케이션 포트를 외부에 노출하고, 시작되면 자동으로 브라우저에서 엽니다.

@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="afdf7348-9466-429a-8dfb-21cd3a9cfb29" name="Changes" comment="" />
+    <list default="true" id="afdf7348-9466-429a-8dfb-21cd3a9cfb29" name="Changes" comment="feat: Update Gitpod configuration and fix GitHub pull request settings">
+      <change beforePath="$PROJECT_DIR$/.gitpod.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.gitpod.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -48,6 +54,21 @@
       <option name="presentableId" value="Default" />
       <updated>1751003836441</updated>
     </task>
+    <task id="LOCAL-00001" summary="feat: Update Gitpod configuration and fix GitHub pull request settings">
+      <option name="closed" value="true" />
+      <created>1751263512555</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1751263512555</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Add Gitpod and Docker Compose configuration" />
+    <MESSAGE value="Changes" />
+    <MESSAGE value="feat: Update Gitpod configuration and fix GitHub pull request settings" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: Update Gitpod configuration and fix GitHub pull request settings" />
   </component>
 </project>
