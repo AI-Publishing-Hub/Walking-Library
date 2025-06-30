@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import member.MemberApplication;
-import member.library.config.kafkaProcessor;
+// import member.library.config.kafkaProcessor;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.messaging.MessageChannel;
@@ -34,21 +34,21 @@ public class AbstractEvent {
         /**
          * spring streams 방식
          */
-        KafkaProcessor processor = MemberApplication.applicationContext.getBean(
-            KafkaProcessor.class
-        );
-        MessageChannel outputChannel = processor.outboundTopic();
+        // KafkaProcessor processor = MemberApplication.applicationContext.getBean(
+        //     KafkaProcessor.class
+        // );
+        // MessageChannel outputChannel = processor.outboundTopic();
 
-        outputChannel.send(
-            MessageBuilder
-                .withPayload(this)
-                .setHeader(
-                    MessageHeaders.CONTENT_TYPE,
-                    MimeTypeUtils.APPLICATION_JSON
-                )
-                .setHeader("type", getEventType())
-                .build()
-        );
+        // outputChannel.send(
+        //     MessageBuilder
+        //         .withPayload(this)
+        //         .setHeader(
+        //             MessageHeaders.CONTENT_TYPE,
+        //             MimeTypeUtils.APPLICATION_JSON
+        //         )
+        //         .setHeader("type", getEventType())
+        //         .build()
+        // );
     }
 
     public void publishAfterCommit() {
