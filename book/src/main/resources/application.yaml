@@ -26,19 +26,25 @@ spring:
           group: book
           contentType: application/json
 
-        # 'wheneverBookAccessRequested_CheckPolicy' 메소드에 대한 바인딩
-        wheneverBookAccessRequested_CheckPolicy-in-0:
-          destination: book.topic # 구독할 토픽 이름
-          group: book
-          contentType: application/json
-
-        # 'wheneverBookAccessChecked_Route' 메소드에 대한 바인딩
+        # wheneverBookAccessChecked_Route는 BookAccessChecked 타입의 이벤트만 받도록 필터링합니다.
         wheneverBookAccessChecked_Route-in-0:
-          destination: book.topic # 구독할 토픽 이름
+          destination: book.topic
           group: book
-          contentType: application/json
+          consumer:
+            # 이 필터링 조건을 추가합니다.
+            condition: "headers['type']=='BookAccessChecked'"
+
+        # wheneverBookAccessRequested_CheckPolicy는 BookAccessRequested 타입의 이벤트만 받도록 필터링합니다.
+        # 이 바인딩이 명시적으로 없었다면 아래와 같이 추가해줍니다.
+        wheneverBookAccessRequested_CheckPolicy-in-0:
+          destination: book.topic
+          group: book
+          consumer:
+            # 이 필터링 조건을 추가합니다.
+            condition: "headers['type']=='BookAccessRequested'"
+
         bookEventProducer-out-0:
-          destination: book.topic # 발행할 토픽 이름 (예시)
+          destination: book.topic
       kafka:
         binder:
           brokers: localhost:9092
