@@ -1,0 +1,25 @@
+# .gitpod.yml
+tasks:
+  - name: Setup & Run Services
+    init: |
+      # 1. Gradle 빌드를 통해 의존성을 설치합니다.
+      ./gradlew build
+    command: |
+      # 2. Docker Compose를 사용해 Kafka와 Zookeeper를 백그라운드에서 실행합니다.
+      docker-compose up -d
+      echo "Waiting for Kafka to start..."
+      sleep 20 # Kafka가 완전히 시작될 때까지 20초 대기합니다.
+
+      # 3. Spring Boot 애플리케이션을 실행합니다.
+      ./gradlew bootRun
+
+ports:
+  # Spring Boot 애플리케이션 포트를 외부에 노출하고, 시작되면 자동으로 브라우저에서 엽니다.
+  - port: 8080
+    onOpen: open-preview
+  # Kafka 포트를 노출합니다. (디버깅용)
+  - port: 9092
+    onOpen: ignore
+  # Zookeeper 포트를 노출합니다. (디버깅용)
+  - port: 2181
+    onOpen: ignore
