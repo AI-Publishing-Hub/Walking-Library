@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "BookView_table")
 @Data
@@ -24,6 +26,8 @@ public class BookView {
     private Integer price;
     private Boolean isBookPublished;
 
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
     @Lob
     private String summary;
 }

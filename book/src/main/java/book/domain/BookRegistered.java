@@ -13,10 +13,13 @@ public class BookRegistered extends AbstractEvent {
 
     private Long id;
     private String title;
-    private Integer price;
-    private Long authorId;
+    private String content;
     private LocalDateTime createdAt;
     private Boolean isBookPublished;
+    private Integer price;
+    private String bookCoverUrl;
+    private Long authorId;
+    private String summary;
 
     public BookRegistered(Book aggregate) {
         super(aggregate);

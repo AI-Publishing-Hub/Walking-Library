@@ -20,8 +20,12 @@ public class BookViewHandler {
         BookView bookView = new BookView();
         bookView.setId(event.getId());
         bookView.setTitle(event.getTitle());
+        bookView.setContent(event.getContent());
+        bookView.setCreatedAt(event.getCreatedAt());
         bookView.setPrice(event.getPrice());
+        bookView.setBookCoverUrl(event.getBookCoverUrl());
         bookView.setAuthorId(event.getAuthorId());
+        bookView.setSummary(event.getSummary());
         bookView.setIsBookPublished(event.getIsBookPublished());
         // 초기값 설정
         bookView.setViewCount(0L);

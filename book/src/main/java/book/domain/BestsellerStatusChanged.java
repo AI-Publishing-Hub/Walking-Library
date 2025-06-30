@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import java.time.LocalDateTime;
+
 @Data
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
