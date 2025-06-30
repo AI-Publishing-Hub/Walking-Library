@@ -26,7 +26,7 @@ public class Book {
 
     private Long authorId;
 
-    private Long viewCount;
+    private Long viewCount = 0L;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
@@ -36,6 +36,7 @@ public class Book {
 
     private Boolean isBookPublished;
 
+    @Column(length = 1024)
     private String bookCoverUrl;
 
     @Lob
