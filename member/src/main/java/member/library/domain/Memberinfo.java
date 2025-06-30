@@ -1,19 +1,19 @@
-package library.domain;
+package member.library.domain;
 
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.*;
+import jakarta.persistence.*;
 import lombok.Data;
 
 //<<< EDA / CQRS
 @Entity
 @Table(name = "MemberInfo_table")
 @Data
-public class MemberInfo {
+public class Memberinfo {
 
     @Id
-    //@GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
 
     private String name;

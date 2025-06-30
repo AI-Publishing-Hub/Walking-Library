@@ -1,9 +1,10 @@
-package library.domain;
+package member.library.domain;
 
 import java.util.*;
-import library.domain.*;
-import library.infra.AbstractEvent;
+
 import lombok.*;
+import member.library.domain.*;
+import member.library.infra.AbstractEvent;
 
 @Data
 @ToString

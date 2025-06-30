@@ -1,12 +1,15 @@
-package library.infra;
+package member.library.infra;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import member.library.config.KafkaProcessor;
+import member.library.domain.*;
+
 import javax.naming.NameParser;
 import javax.naming.NameParser;
 import javax.transaction.Transactional;
-import library.config.kafka.KafkaProcessor;
-import library.domain.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.messaging.handler.annotation.Payload;

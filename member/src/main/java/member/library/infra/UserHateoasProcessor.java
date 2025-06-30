@@ -1,10 +1,11 @@
-package library.infra;
+package member.library.infra;
 
-import library.domain.*;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.RepresentationModelProcessor;
 import org.springframework.stereotype.Component;
+
+import member.library.domain.*;
 
 @Component
 public class UserHateoasProcessor

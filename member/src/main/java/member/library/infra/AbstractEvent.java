@@ -1,9 +1,11 @@
-package library.infra;
+package member.library.infra;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import library.MemberApplication;
-import library.config.kafka.KafkaProcessor;
+
+import member.MemberApplication;
+import member.library.config.kafkaProcessor;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHeaders;

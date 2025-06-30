@@ -1,9 +1,12 @@
-package library.infra;
+package member.library.infra;
 
 import java.util.List;
-import library.domain.*;
+
+import org.apache.kafka.clients.consumer.internals.AbstractPartitionAssignor.MemberInfo;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+
+import member.library.domain.*;
 
 @RepositoryRestResource(
     collectionResourceRel = "memberInfos",

@@ -1,12 +1,14 @@
-package library.domain;
+package member.library.domain;
 
 import java.util.Date;
 import java.util.List;
-import library.domain.*;
+
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+
+import member.library.domain.*;
 
 //<<< PoEAA / Repository
 @RepositoryRestResource(collectionResourceRel = "users", path = "users")
