@@ -1,4 +1,4 @@
-package member.src.main.java.library.domain;
+package library.domain;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -15,7 +15,7 @@ public class ChargedPoint extends AbstractEvent {
     private Integer pointBalance;
 
     public ChargedPoint(User aggregate) {
-        super(aggregate);x`
+        super(aggregate);
     }
 
     public ChargedPoint() {

@@ -10,8 +10,13 @@ import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 
+
+
+
 @Service
 public class MemberInfoViewHandler {
+    public static final String USER = "USER";
+    public static final String UNSUBSCRIPTED = "UNSUBSCRIPTED";
 
     //<<< DDD / CQRS
     @Autowired

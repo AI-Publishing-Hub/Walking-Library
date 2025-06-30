@@ -12,6 +12,6 @@ public interface KafkaProcessor {
     @Input(INPUT)
     SubscribableChannel inboundTopic();
 
-    @Output(OUTPUT)s
+    @Output(OUTPUT)
     MessageChannel outboundTopic();
 }
