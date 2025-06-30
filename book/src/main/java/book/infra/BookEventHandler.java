@@ -1,9 +1,6 @@
 package book.infra;
 
-import book.domain.Book;
-import book.domain.BookRepository;
-import book.domain.CreatedPost;
-import book.domain.OpenAiService;
+import book.domain.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -16,6 +13,7 @@ public class BookEventHandler {
 
     private final BookRepository bookRepository;
     private final OpenAiService openAiService;
+    private final BookService bookService;
 
     @EventListener
     public void handleCreatedPost(CreatedPost event) {
@@ -30,7 +28,11 @@ public class BookEventHandler {
             book.setBookCoverUrl(result.bookCoverUrl());
             System.out.println(result.bookCoverUrl());
 
-            bookRepository.save(book);
+            Book updated = bookRepository.save(book);
+
+            // 출간 폴리시 호출
+            bookService.publishBook(updated);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
