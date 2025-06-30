@@ -1,12 +1,9 @@
 server:
   port: 8080
-
-spring:
-  application:
-    name: book
 ---
-
+# 'default' 프로필 설정
 spring:
+  # 이 부분이 수정되었습니다.
   config:
     activate:
       on-profile: default
@@ -15,74 +12,137 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
-        implicit_naming_strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyComponentPathImpl
   cloud:
+    function:
+      # Consumer 역할을 하는 빈(Bean)의 이름을 지정합니다.
+      # 이전 단계에서 PolicyHandler에 'bookEventConsumer'로 만들었으므로 이름을 맞춰줍니다.
+      definition: bookEventConsumer;bookEventProducer
     stream:
+      # 함수형 모델의 바인딩 설정
+      bindings:
+        # Consumer 바인딩: <functionName>-in-<index> 형식
+        bookEventConsumer-in-0:
+          destination: event-in # 구독할 토픽 이름
+          group: book # 컨슈머 그룹
+          contentType: application/json
+        # Producer 바인딩 (StreamBridge용)
+        bookEventProducer-out-0:
+          destination: event-out # 발행할 토픽 이름
       kafka:
         binder:
           brokers: localhost:9092
-        streams:
-          binder:
-            configuration:
-              default:
-                key:
-                  serde: org.apache.kafka.common.serialization.Serdes$StringSerde
-                value:
-                  serde: org.apache.kafka.common.serialization.Serdes$StringSerde
-      bindings:
-        event-in:
-          group: book
-          #<<< EDA / Topic Name
-          destination: library
-          #>>> EDA / Topic Name
-          contentType: application/json
-        event-out:
-          #<<< EDA / Topic Name
-          destination: library
-          #>>> EDA / Topic Name
-          contentType: application/json
-
-logging:
-  level:
-    org.hibernate.type: trace
-    org.springframework.cloud: debug
-
-
-server:
-  port: 8084
 
 ---
-
+# 'docker' 프로필 설정
 spring:
+  # 이 부분이 수정되었습니다.
   config:
     activate:
       on-profile: docker
-  jpa:
-    properties:
-      hibernate:
-        show_sql: true
-        format_sql: true
-        implicit_naming_strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyComponentPathImpl
   cloud:
+    function:
+      definition: bookEventConsumer;bookEventProducer
     stream:
+      bindings:
+        bookEventConsumer-in-0:
+          destination: event-in
+          group: book
+          contentType: application/json
+        bookEventProducer-out-0:
+          destination: event-out
       kafka:
         binder:
-          brokers: my-kafka:9092
-        streams:
-          binder:
-            configuration:
-              default:
-                key:
-                  serde: org.apache.kafka.common.serialization.Serdes$StringSerde
-                value:
-                  serde: org.apache.kafka.common.serialization.Serdes$StringSerde
-      bindings:
-        event-in:
-          group: book
-          destination: library
-          contentType: application/json
-        event-out:
-          destination: library
-          contentType: application/json
+          # 쿠버네티스 내부 Kafka 서비스 주소
+          brokers: my-kafka.kafka.svc.cluster.local:9092
 
 
+
+
+#server:
+#  port: 8080
+#
+#spring:
+#  application:
+#    name: book
+#---
+#
+#spring:
+#  config:
+#    activate:
+#      on-profile: default
+#  jpa:
+#    properties:
+#      hibernate:
+#        show_sql: true
+#        format_sql: true
+#        implicit_naming_strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyComponentPathImpl
+#  cloud:
+#    stream:
+#      kafka:
+#        binder:
+#          brokers: localhost:9092
+#        streams:
+#          binder:
+#            configuration:
+#              default:
+#                key:
+#                  serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+#                value:
+#                  serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+#      bindings:
+#        event-in:
+#          group: book
+#          #<<< EDA / Topic Name
+#          destination: library
+#          #>>> EDA / Topic Name
+#          contentType: application/json
+#        event-out:
+#          #<<< EDA / Topic Name
+#          destination: library
+#          #>>> EDA / Topic Name
+#          contentType: application/json
+#
+#logging:
+#  level:
+#    org.hibernate.type: trace
+#    org.springframework.cloud: debug
+#
+#
+#server:
+#  port: 8084
+#
+#---
+#
+#spring:
+#  config:
+#    activate:
+#      on-profile: docker
+#  jpa:
+#    properties:
+#      hibernate:
+#        show_sql: true
+#        format_sql: true
+#        implicit_naming_strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyComponentPathImpl
+#  cloud:
+#    stream:
+#      kafka:
+#        binder:
+#          brokers: my-kafka:9092
+#        streams:
+#          binder:
+#            configuration:
+#              default:
+#                key:
+#                  serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+#                value:
+#                  serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+#      bindings:
+#        event-in:
+#          group: book
+#          destination: library
+#          contentType: application/json
+#        event-out:
+#          destination: library
+#          contentType: application/json
+#
+#
