@@ -19,27 +19,29 @@ public class PolicyHandler {
     BookRepository bookRepository;
     @Autowired
     private BookViewHandler bookViewHandler;
-//    @Autowired
-//    ObjectMapper objectMapper;
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Bean
     public Consumer<Message<String>> bookEventConsumer() {
         return message -> {
             String eventType = (String) message.getHeaders().get("type");
-            System.out.println(/* ... */);
+            System.out.println("##### 수신된 이벤트 타입 : " + eventType + " / 페이로드 : " + message.getPayload() + " #####");
 
-            // 이벤트 타입에 따라 BookViewHandler를 호출합니다.
             try {
+                // 주입받은 objectMapper를 사용하여 역직렬화를 수행합니다.
                 if ("BookRegistered".equals(eventType)) {
                     bookViewHandler.whenBookRegistered_then_createView(
-                            new ObjectMapper().readValue(message.getPayload(), BookRegistered.class)
+                            objectMapper.readValue(message.getPayload(), BookRegistered.class)
                     );
                 } else if ("BestsellerStatusChanged".equals(eventType)) {
                     bookViewHandler.whenBestsellerStatusChanged_then_updateView(
-                            new ObjectMapper().readValue(message.getPayload(), BestsellerStatusChanged.class)
+                            objectMapper.readValue(message.getPayload(), BestsellerStatusChanged.class)
                     );
                 }
             } catch (Exception e) {
+                // 예외 발생 시 로그를 남겨 문제를 파악하기 쉽게 합니다.
+                System.err.println("##### [에러] 이벤트 처리 중 예외 발생 : " + eventType + " #####");
                 e.printStackTrace();
             }
         };

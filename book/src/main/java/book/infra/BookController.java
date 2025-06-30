@@ -6,6 +6,7 @@ import book.dto.BookSummaryDto;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,20 @@ public class BookController {
 
     @Autowired
     BookViewRepository bookViewRepository;
+
+    @PostMapping
+    public ResponseEntity<Book> createBook(@RequestBody Book book) {
+        try {
+            // 전달받은 book 객체를 저장합니다.
+            Book savedBook = bookRepository.save(book);
+            // @PostPersist에 의해 BookRegistered 이벤트가 발행됩니다.
+            return new ResponseEntity<>(savedBook, HttpStatus.CREATED);
+        } catch (Exception e) {
+            // 오류 발생 시 서버 에러를 반환합니다.
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
     /**
      * 기능 1: 출판된 모든 책 목록 조회 (Read Model 사용)
@@ -58,47 +73,47 @@ public class BookController {
     public ResponseEntity<?> getBookDetails(
             @PathVariable Long id,
             @RequestHeader(value = "X-USER-ID", required = true) String userId) {
-        try {
-            // --- 접근 제어 Saga 로직 (기존과 동일) ---
-            BookAccessRequested event = new BookAccessRequested();
-            event.setId(id);
-            // 책 가격은 Write Model 또는 Read Model 어디서든 가져올 수 있습니다.
-            event.setPrice(bookViewRepository.findById(id).map(BookView::getPrice).orElse(0));
-            event.setUserId(userId);
+        // try {
+        // --- 접근 제어 Saga 로직 (기존과 동일) ---
+        BookAccessRequested event = new BookAccessRequested();
+        event.setId(id);
+        // 책 가격은 Write Model 또는 Read Model 어디서든 가져올 수 있습니다.
+        event.setPrice(bookViewRepository.findById(id).map(BookView::getPrice).orElse(0));
+        event.setUserId(userId);
 
-            EventSagaRouter.V(userId);
-            event.publish();
-            BookAccessChecked resultEvent = (BookAccessChecked) EventSagaRouter.P(userId);
-            // --- Saga 로직 끝 ---
+        EventSagaRouter.V(userId);
+        event.publish();
+        // BookAccessChecked resultEvent = (BookAccessChecked) EventSagaRouter.P(userId);
+        // // --- Saga 로직 끝 ---
 
-            resultEvent.setAllowed(true);
+        // resultEvent.setAllowed(true);
+        //resultEvent != null && resultEvent.isAllowed()
+        if (true) {
+            // 권한이 있으면, 조회수 증가를 위해 Write Model의 book 객체를 찾습니다.
+            bookRepository.findById(id).ifPresent(book -> {
+                book.setViewCount(book.getViewCount() + 1);
+                bookRepository.save(book); // save를 통해 @PreUpdate(베스트셀러 로직)가 호출되고 이벤트가 발행됨
+            });
 
-            if (resultEvent != null && resultEvent.isAllowed()) {
-                // 권한이 있으면, 조회수 증가를 위해 Write Model의 book 객체를 찾습니다.
-                bookRepository.findById(id).ifPresent(book -> {
-                    book.setViewCount(book.getViewCount() + 1);
-                    bookRepository.save(book); // save를 통해 @PreUpdate(베스트셀러 로직)가 호출되고 이벤트가 발행됨
-                });
-
-                // 사용자에게 보여줄 데이터는 Read Model에서 조회하여 즉시 반환합니다.
-                return bookViewRepository.findById(id)
-                        .map(view -> {
-                            BookDetailDto bookDetail = new BookDetailDto(
-                                    view.getId(), view.getTitle(), view.getContent(),
-                                    view.getViewCount(), view.getAuthorId(), view.getIsBestseller(),
-                                    view.getBookCoverUrl(), view.getPrice()
-                            );
-                            return ResponseEntity.ok(bookDetail);
-                        })
-                        .orElse(ResponseEntity.notFound().build());
-            } else {
-                return ResponseEntity.status(403).body("Access Denied");
-            }
-
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            return ResponseEntity.status(503).body("Service unavailable or timeout");
+            // 사용자에게 보여줄 데이터는 Read Model에서 조회하여 즉시 반환합니다.
+            return bookViewRepository.findById(id)
+                    .map(view -> {
+                        BookDetailDto bookDetail = new BookDetailDto(
+                                view.getId(), view.getTitle(), view.getContent(),
+                                view.getViewCount(), view.getAuthorId(), view.getIsBestseller(),
+                                view.getBookCoverUrl(), view.getPrice()
+                        );
+                        return ResponseEntity.ok(bookDetail);
+                    })
+                    .orElse(ResponseEntity.notFound().build());
+        } else {
+            return ResponseEntity.status(403).body("Access Denied");
         }
+
+        // } catch (InterruptedException e) {
+        //     Thread.currentThread().interrupt();
+        //     return ResponseEntity.status(503).body("Service unavailable or timeout");
+        // }
     }
 
 //    /**
