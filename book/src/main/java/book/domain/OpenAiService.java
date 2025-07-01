@@ -57,9 +57,32 @@ public class OpenAiService {
         // 예: GPT가 생성한 내용 (기본 텍스트 기반 파싱)
         String[] lines = resultText.split("\n");
 
-        String summary = lines[0].replace("1.", "").trim();
-        int price = Integer.parseInt(lines[1].replaceAll("[^0-9]", ""));
-        String imagePrompt = lines[2].replace("3.", "").trim();
+//        String summary = lines[0].replace("1.", "").trim();
+//        int price = Integer.parseInt(lines[1].replaceAll("[^0-9]", ""));
+//        String imagePrompt = lines[2].replace("3.", "").trim();
+
+        String summary = "요약 정보를 생성하지 못했습니다.";
+        int price = 20000; // 기본 가격
+        String imagePrompt = "A general book cover about " + title; // 기본 이미지 프롬프트
+
+        // 2. 응답 배열의 길이를 확인하고, 내용이 비어있지 않은지 확인하며 안전하게 값을 추출합니다.
+        try {
+            if (lines.length > 0 && lines[0] != null && !lines[0].trim().isEmpty()) {
+                summary = lines[0].replace("1.", "").trim();
+            }
+            if (lines.length > 1 && lines[1] != null && !lines[1].trim().isEmpty()) {
+                String priceStr = lines[1].replaceAll("[^0-9]", "");
+                if (!priceStr.isEmpty()) { // 숫자만 추출한 결과가 비어있지 않을 때만 변환합니다.
+                    price = Integer.parseInt(priceStr);
+                }
+            }
+            if (lines.length > 2 && lines[2] != null && !lines[2].trim().isEmpty()) {
+                imagePrompt = lines[2].replace("3.", "").trim();
+            }
+        } catch (Exception e) {
+            System.err.println("GPT 응답 파싱 중 오류 발생. 기본값을 사용합니다. 오류: " + e.getMessage());
+            // 파싱 중 어떤 오류가 나더라도, 위에서 설정한 기본값을 사용하게 되므로 시스템은 멈추지 않습니다.
+        }
 
 // 이미지 생성
         String imageUrl = generateImage(imagePrompt);
