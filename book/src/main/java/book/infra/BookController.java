@@ -84,11 +84,15 @@ public class BookController {
 
         EventSagaRouter.V(userId);
         event.publish();
-        // BookAccessChecked resultEvent = (BookAccessChecked) EventSagaRouter.P(userId);
-        // // --- Saga 로직 끝 ---
-
-        // resultEvent.setAllowed(true);
-        //resultEvent != null && resultEvent.isAllowed()
+//        BookAccessChecked resultEvent;
+//        try {
+//            resultEvent = (BookAccessChecked) EventSagaRouter.P(userId);
+//        } catch (InterruptedException e) {
+//            Thread.currentThread().interrupt();
+//            return ResponseEntity.status(503).body("Auth Service unavailable or timeout");
+//        }
+         // --- Saga 로직 끝 ---
+//        if(resultEvent != null && resultEvent.isAllowed()) {
         if (true) {
             // 권한이 있으면, 조회수 증가를 위해 Write Model의 book 객체를 찾습니다.
             bookRepository.findById(id).ifPresent(book -> {
