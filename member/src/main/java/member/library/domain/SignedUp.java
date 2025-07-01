@@ -26,8 +26,8 @@ public class SignedUp extends AbstractEvent {
         super(aggregate);
 
         User user = new User();
-        user.setName(user.getName());
-        user.setPhoneNumber(user.getPhoneNumber());
+        user.setName(aggregate.getName());
+        user.setPhoneNumber(aggregate.getPhoneNumber());
 
         User savedUser = userRepository.save(user);
 

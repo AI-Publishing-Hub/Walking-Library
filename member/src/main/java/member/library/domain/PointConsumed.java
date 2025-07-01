@@ -15,9 +15,20 @@ public class PointConsumed extends AbstractEvent {
     private Long id;
     private Integer pointBalance;
 
-    public PointConsumed(User aggregate) {
+    public PointConsumed(Long Id, int pointBalance) {
         super(aggregate);
+
+        User user = userRepository.findById(userId)
+        .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+
+        if (user.getPointBalance() < amount) {
+        throw new IllegalArgumentException("포인트가 부족합니다.");
+        }
+
+        user.setPointBalance(user.getPointBalance() - amount);
+        userRepository.save(user);
     }
+    
 
     public PointConsumed() {
         super();
