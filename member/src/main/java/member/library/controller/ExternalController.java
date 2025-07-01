@@ -20,4 +20,9 @@ public class ExternalController {
     public String getBookInfo(@PathVariable Long id) {
         return externalService.callBook(id);
     }
+    @PostMapping("/test")
+    public String testPost(@RequestBody String payload) {
+        return "받은 데이터: " + payload;
+}
+
 }
