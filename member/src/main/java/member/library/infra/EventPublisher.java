@@ -1,27 +1,19 @@
 package member.library.infra;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.cloud.stream.function.StreamBridge;
+import org.springframework.stereotype.Service;
 
 @Service
 public class EventPublisher {
 
-    private static final Logger log = LoggerFactory.getLogger(EventPublisher.class);
-
     private final StreamBridge streamBridge;
-    private final String bindingName;
 
-    public EventPublisher(StreamBridge streamBridge, @Value("${event.binding-name:processEvent-out-0}") String bindingName) {
+    public EventPublisher(StreamBridge streamBridge) {
         this.streamBridge = streamBridge;
-        this.bindingName = bindingName;
     }
 
     public void publishEvent(String payload) {
-        boolean sent = streamBridge.send(bindingName, payload);
-        if (sent) {
-            log.info("✅ Event sent successfully to {}: {}", bindingName, payload);
-        } else {
-            log.error("❌ Failed to send event to {}: {}", bindingName, payload);
-        }
+        // processEvent-out-0는 application.yml에 설정한 바인딩명과 일치해야 함
+        streamBridge.send("processEvent-out-0", payload);
     }
 }

@@ -8,8 +8,7 @@ import member.library.domain.*;
 import member.library.infra.AbstractEvent;
 
 //<<< DDD / Domain Event
-@Getter
-@Setter
+@Data
 @ToString
 public class ChargedPoint extends AbstractEvent {
 
@@ -18,10 +17,6 @@ public class ChargedPoint extends AbstractEvent {
 
     public ChargedPoint(User aggregate) {
         super(aggregate);
-        this.id = aggregate.getId();
-        this.pointBalance = aggregate.getPointBalance();
-        this.chargedAmount = chargedAmount;
-        this.chargedAt = new Date();
     }
 
     public ChargedPoint() {
