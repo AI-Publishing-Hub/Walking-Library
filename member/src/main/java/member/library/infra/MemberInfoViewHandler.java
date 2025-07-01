@@ -1,109 +1,128 @@
 package member.library.infra;
 
-import member.library.domain.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
+
+
+import member.library.domain.MemberInfo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 
-import java.util.function.Consumer;
+
+import member.library.domain.*;
 
 @Service
 public class MemberInfoViewHandler {
 
-    private static final Logger log = LoggerFactory.getLogger(MemberInfoViewHandler.class);
+    //<<< DDD / CQRS
+    @Autowired
+    private MemberInfoRepository memberInfoRepository;
+    public void handleSignedUp(SignedUp signedUp) {
+        if (!signedUp.validate()) return;
 
-    private final MemberInfoRepository memberInfoRepository;
+        MemberInfo memberInfo = new MemberInfo();
+        //memberInfo.setId(signedUp.getId());
+        memberInfo.setName(signedUp.getName());
+        memberInfo.setRole("USER");
+        memberInfo.setSubscriptionStatus("UNSUBSCRIPTED");
+        memberInfo.setPointBalance(signedUp.getPointBalance());
+        memberInfo.setCreatedAt(signedUp.getCreatedAt());
+        memberInfo.setUpdatedAt(signedUp.getUpdatedAt());
+        memberInfo.setIsKtVerified(signedUp.getIsKtVerified());
 
-    public MemberInfoViewHandler(MemberInfoRepository memberInfoRepository) {
-        this.memberInfoRepository = memberInfoRepository;
+        memberInfoRepository.save(memberInfo);
     }
+    
 
-    // 회원가입 이벤트: MemberInfo 생성
-    @Bean
-    public Consumer<SignedUp> whenSignedUp() {
-        return signedUp -> {
-            try {
-                if (!signedUp.validate()) return;
+    // @StreamListener(KafkaProcessor.INPUT)
+    // public void whenSignedUp_then_CREATE_1(@Payload SignedUp signedUp) {
+    //     try {
+    //         if (!signedUp.validate()) return;
 
-                MemberInfo memberInfo = new MemberInfo(
-                    signedUp.getId(),
-                    signedUp.getName(),
-                    signedUp.getPhoneNumber(),
-                    "USER",
-                    "UNSUBSCRIBED",
-                    signedUp.getPointBalance(),
-                    signedUp.getCreatedAt(),
-                    signedUp.getUpdatedAt(),
-                    signedUp.getIsKtVerified()
-                );
+    //         // view 객체 생성
+    //         MemberInfo memberInfo = new MemberInfo();
+    //         // view 객체에 이벤트의 Value 를 set 함
+    //         memberInfo.setId(signedUp.getId());
+    //         memberInfo.setName(signedUp.getName());
+    //         memberInfo.setRole(USER);
+    //         memberInfo.setSubscriptionStatus(UNSUBSCRIPTED);
+    //         memberInfo.setPointBalance(signedUp.getPointBalance());
+    //         memberInfo.setCreatedAt(signedUp.getCreatedAt());
+    //         memberInfo.setUpdatedAt(signedUp.getUpdatedAt());
+    //         memberInfo.setIsKtVerified(signedUp.getIsKtVerified());
+    //         // view 레파지 토리에 save
+    //         memberInfoRepository.save(memberInfo);
+    //     } catch (Exception e) {
+    //         e.printStackTrace();
+    //     }
+    // }
 
-                memberInfoRepository.save(memberInfo);
-                log.info("✅ MemberInfo created: {}", memberInfo);
+    // @StreamListener(KafkaProcessor.INPUT)
+    // public void whenPointConsumed_then_UPDATE_1(
+    //     @Payload PointConsumed pointConsumed
+    // ) {
+    //     try {
+    //         if (!pointConsumed.validate()) return;
+    //         // view 객체 조회
 
-            } catch (Exception e) {
-                log.error("❌ Failed to handle SignedUp event", e);
-            }
-        };
-    }
+    //         List<MemberInfo> memberInfoList = memberInfoRepository.findByPointBalance(
+    //             pointConsumed.getPointBalance()
+    //         );
+    //         for (MemberInfo memberInfo : memberInfoList) {
+    //             // view 객체에 이벤트의 eventDirectValue 를 set 함
+    //             memberInfo.setId(pointConsumed.getId());
+    //             // view 레파지 토리에 save
+    //             memberInfoRepository.save(memberInfo);
+    //         }
+    //     } catch (Exception e) {
+    //         e.printStackTrace();
+    //     }
+    // }
 
-    // 포인트 차감 이벤트: pointBalance 업데이트
-    @Bean
-    public Consumer<PointConsumed> whenPointConsumed() {
-        return event -> {
-            try {
-                if (!event.validate()) return;
+    // @StreamListener(KafkaProcessor.INPUT)
+    // public void whenChargedPoint_then_UPDATE_2(
+    //     @Payload ChargedPoint chargedPoint
+    // ) {
+    //     try {
+    //         if (!chargedPoint.validate()) return;
+    //         // view 객체 조회
 
-                memberInfoRepository.findById(event.getId()).ifPresent(memberInfo -> {
-                    memberInfo.setPointBalance(event.getPointBalance());
-                    memberInfoRepository.save(memberInfo);
-                    log.info("✅ MemberInfo updated (point consumed): {}", memberInfo);
-                });
+    //         List<MemberInfo> memberInfoList = memberInfoRepository.findByPointBalance(
+    //             chargedPoint.getPointBalance()
+    //         );
+    //         for (MemberInfo memberInfo : memberInfoList) {
+    //             // view 객체에 이벤트의 eventDirectValue 를 set 함
+    //             memberInfo.setId(chargedPoint.getId());
+    //             // view 레파지 토리에 save
+    //             memberInfoRepository.save(memberInfo);
+    //         }
+    //     } catch (Exception e) {
+    //         e.printStackTrace();
+    //     }
+    // }
 
-            } catch (Exception e) {
-                log.error("❌ Failed to handle PointConsumed event", e);
-            }
-        };
-    }
+    // @StreamListener(KafkaProcessor.INPUT)
+    // public void whenSubscribed_then_UPDATE_3(@Payload Subscribed subscribed) {
+    //     try {
+    //         if (!subscribed.validate()) return;
+    //         // view 객체 조회
 
-    // 포인트 충전 이벤트: pointBalance 업데이트
-    @Bean
-    public Consumer<ChargedPoint> whenChargedPoint() {
-        return event -> {
-            try {
-                if (!event.validate()) return;
-
-                memberInfoRepository.findById(event.getId()).ifPresent(memberInfo -> {
-                    memberInfo.setPointBalance(event.getPointBalance());
-                    memberInfoRepository.save(memberInfo);
-                    log.info("✅ MemberInfo updated (point charged): {}", memberInfo);
-                });
-
-            } catch (Exception e) {
-                log.error("❌ Failed to handle ChargedPoint event", e);
-            }
-        };
-    }
-
-    // 구독 상태 변경 이벤트: subscriptionStatus, 시작/종료일 업데이트
-    @Bean
-    public Consumer<Subscribed> whenSubscribed() {
-        return event -> {
-            try {
-                if (!event.validate()) return;
-
-                memberInfoRepository.findById(event.getId()).ifPresent(memberInfo -> {
-                    memberInfo.setSubscriptionStatus(event.getSubscriptionStatus());
-                    memberInfo.setUpdatedAt(event.getTimestamp() != null
-                            ? new java.util.Date(event.getTimestamp())
-                            : new java.util.Date());
-                    memberInfoRepository.save(memberInfo);
-                    log.info("✅ MemberInfo updated (subscription): {}", memberInfo);
-                });
-
-            } catch (Exception e) {
-                log.error("❌ Failed to handle Subscribed event", e);
-            }
-        };
-    }
+    //         List<MemberInfo> memberInfoList = memberInfoRepository.findBySubscriptionStatus(
+    //             subscribed.getSubscripted()
+    //         );
+    //         for (MemberInfo memberInfo : memberInfoList) {
+    //             // view 객체에 이벤트의 eventDirectValue 를 set 함
+    //             memberInfo.setId(subscribed.getId());
+    //             // view 레파지 토리에 save
+    //             memberInfoRepository.save(memberInfo);
+    //         }
+    //     } catch (Exception e) {
+    //         e.printStackTrace();
+    //     }
+    // }
+    //>>> DDD / CQRS
 }
