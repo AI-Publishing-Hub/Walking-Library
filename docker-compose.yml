@@ -32,3 +32,32 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
       # --- 여기까지 ---
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  member:
+    build: ./member
+    container_name: member
+    ports:
+      - "8081:8081"
+    depends_on:
+      - kafka
+    networks:
+      - walking-library-network
+
+  author:
+    build: ./author
+    container_name: author
+    ports:
+      - "8082:8082"
+    networks:
+      - walking-library-network
+
+  book:
+    build: ./book
+    container_name: book
+    ports:
+      - "8083:8083"
+    networks:
+      - walking-library-network
+
+networks:
+  walking-library-network:
