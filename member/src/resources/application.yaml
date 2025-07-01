@@ -14,7 +14,25 @@ spring:
         show_sql: true
         format_sql: true
         implicit_naming_strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyComponentPathImpl
+  
   cloud:
+    gateway:
+      route:
+        - id: subscriber
+          uri: http://localhost:8086
+          predicates:
+            - Path=/users/**, /subscritions/**
+      
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "*"
+            allowedMethods:
+              - "*"
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
     stream:
       kafka:
         binder:
