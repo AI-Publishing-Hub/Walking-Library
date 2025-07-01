@@ -1,5 +1,9 @@
 server:
   port: 8080
+
+openapi:
+  api:
+    key: book-api
 ---
 # 'default' 프로필 설정
 spring:
