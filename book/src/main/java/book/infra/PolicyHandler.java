@@ -25,77 +25,77 @@ public class PolicyHandler {
     private final OpenAiService openAiService;
 
 
+    @Bean
+    public Consumer<Message<String>> bookEventConsumer() {
+        return message -> {
+            String eventType = (String) message.getHeaders().get("type");
+            System.out.println("##### 수신된 이벤트 타입 : " + eventType + " / 페이로드 : " + message.getPayload() + " #####");
+
+            try {
+                // 주입받은 objectMapper를 사용하여 역직렬화를 수행합니다.
+                if ("BookRegistered".equals(eventType)) {
+
+                    BookRegistered event = objectMapper.readValue(message.getPayload(), BookRegistered.class);
+
+                    AiResult result = openAiService.analyzeBook(event);
+                    Book book = bookRepository.findById(event.getId()).orElseThrow();
+                    book.setSummary(result.summary());
+                    System.out.println(result.summary());
+                    book.setPrice(result.price());
+                    System.out.println(result.price());
+                    book.setBookCoverUrl(result.bookCoverUrl());
+                    System.out.println(result.bookCoverUrl());
+
+                    event.setSummary(result.summary());
+                    event.setPrice(result.price());
+                    event.setBookCoverUrl(result.bookCoverUrl());
+
+                    bookViewHandler.whenBookRegistered_then_createView(
+                            event
+                    );
+                } else if ("BestsellerStatusChanged".equals(eventType)) {
+                    bookViewHandler.whenBestsellerStatusChanged_then_updateView(
+                            objectMapper.readValue(message.getPayload(), BestsellerStatusChanged.class)
+                    );
+                }
+            } catch (Exception e) {
+                // 예외 발생 시 로그를 남겨 문제를 파악하기 쉽게 합니다.
+                System.err.println("##### [에러] 이벤트 처리 중 예외 발생 : " + eventType + " #####");
+                e.printStackTrace();
+            }
+        };
+    }
+
 //    @Bean
-//    public Consumer<Message<String>> bookEventConsumer() {
-//        return message -> {
-//            String eventType = (String) message.getHeaders().get("type");
-//            System.out.println("##### 수신된 이벤트 타입 : " + eventType + " / 페이로드 : " + message.getPayload() + " #####");
+//    public Consumer<BookRegistered> bookRegistered() {
+//        return event -> {
+//            System.out.println("📘 BookRegistered 이벤트 수신: " + event);
+//            if (event == null || !event.validate()) return;
 //
-//            try {
-//                // 주입받은 objectMapper를 사용하여 역직렬화를 수행합니다.
-//                if ("BookRegistered".equals(eventType)) {
+//            AiResult result = openAiService.analyzeBook(event);
 //
-//                    BookRegistered event = objectMapper.readValue(message.getPayload(), BookRegistered.class);
+//            Book book = bookRepository.findById(event.getId()).orElseThrow();
+//            book.setSummary(result.summary());
+//            book.setPrice(result.price());
+//            book.setBookCoverUrl(result.bookCoverUrl());
 //
-//                    AiResult result = openAiService.analyzeBook(event);
-//                    Book book = bookRepository.findById(event.getId()).orElseThrow();
-//                    book.setSummary(result.summary());
-//                    System.out.println(result.summary());
-//                    book.setPrice(result.price());
-//                    System.out.println(result.price());
-//                    book.setBookCoverUrl(result.bookCoverUrl());
-//                    System.out.println(result.bookCoverUrl());
+//            event.setSummary(result.summary());
+//            event.setPrice(result.price());
+//            event.setBookCoverUrl(result.bookCoverUrl());
 //
-//                    event.setSummary(result.summary());
-//                    event.setPrice(result.price());
-//                    event.setBookCoverUrl(result.bookCoverUrl());
-//
-//                    bookViewHandler.whenBookRegistered_then_createView(
-//                            event
-//                    );
-//                } else if ("BestsellerStatusChanged".equals(eventType)) {
-//                    bookViewHandler.whenBestsellerStatusChanged_then_updateView(
-//                            objectMapper.readValue(message.getPayload(), BestsellerStatusChanged.class)
-//                    );
-//                }
-//            } catch (Exception e) {
-//                // 예외 발생 시 로그를 남겨 문제를 파악하기 쉽게 합니다.
-//                System.err.println("##### [에러] 이벤트 처리 중 예외 발생 : " + eventType + " #####");
-//                e.printStackTrace();
-//            }
+//            bookViewHandler.whenBookRegistered_then_createView(event);
 //        };
 //    }
-
-    @Bean
-    public Consumer<BookRegistered> bookRegistered() {
-        return event -> {
-            System.out.println("📘 BookRegistered 이벤트 수신: " + event);
-            if (event == null || !event.validate()) return;
-
-            AiResult result = openAiService.analyzeBook(event);
-
-            Book book = bookRepository.findById(event.getId()).orElseThrow();
-            book.setSummary(result.summary());
-            book.setPrice(result.price());
-            book.setBookCoverUrl(result.bookCoverUrl());
-
-            event.setSummary(result.summary());
-            event.setPrice(result.price());
-            event.setBookCoverUrl(result.bookCoverUrl());
-
-            bookViewHandler.whenBookRegistered_then_createView(event);
-        };
-    }
-
-    @Bean
-    public Consumer<BestsellerStatusChanged> bestsellerStatusChanged() {
-        return event -> {
-            System.out.println("🔥 BestsellerStatusChanged 이벤트 수신: " + event);
-            if (event == null || !event.validate()) return;
-
-            bookViewHandler.whenBestsellerStatusChanged_then_updateView(event);
-        };
-    }
+//
+//    @Bean
+//    public Consumer<BestsellerStatusChanged> bestsellerStatusChanged() {
+//        return event -> {
+//            System.out.println("🔥 BestsellerStatusChanged 이벤트 수신: " + event);
+//            if (event == null || !event.validate()) return;
+//
+//            bookViewHandler.whenBestsellerStatusChanged_then_updateView(event);
+//        };
+//    }
     @Bean
     public Consumer<Message<BookAccessChecked>> wheneverBookAccessChecked_Route() {
         return message -> {

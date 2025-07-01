@@ -17,41 +17,38 @@ spring:
         format_sql: true
   cloud:
     function:
-      definition: bookRegistered;bestsellerStatusChanged;wheneverBookAccessChecked_Route
-#      definition: bookEventConsumer;wheneverBookAccessRequested_CheckPolicy;wheneverBookAccessChecked_Route
+      definition: bookEventConsumer;wheneverBookAccessChecked_Route
+#      definition: bookRegistered;bestsellerStatusChanged;wheneverBookAccessChecked_Route
     stream:
       # 모든 통신은 'book.topic'이라는 단일 토픽을 사용하도록 통일합니다.
       bindings:
-        # BookRegistered 이벤트만 처리
-        bookRegistered-in-0:
-          destination: book.topic
+        # 모든 이벤트를 로깅하는 컨슈머
+        bookEventConsumer-in-0:
+          destination: book.topic # <--- 'event-in'에서 수정
           group: book
           contentType: application/json
-          consumer:
-            condition: "headers['type']=='BookRegistered'"  # 필터 필수
 
-        # BestsellerStatusChanged 이벤트만 처리
-        bestsellerStatusChanged-in-0:
-          destination: book.topic
-          group: book
-          contentType: application/json
-          consumer:
-            condition: "headers['type']=='BestsellerStatusChanged'"  # 필터 필수
-
-        # BookAccessChecked 이벤트만 처리
+        # BookAccessChecked 이벤트만 필터링하는 컨슈머
         wheneverBookAccessChecked_Route-in-0:
           destination: book.topic
           group: book
-          contentType: application/json
           consumer:
             condition: "headers['type']=='BookAccessChecked'"
 
-#        # BookAccessRequested 이벤트만 필터링하는 컨슈머
-#        wheneverBookAccessRequested_CheckPolicy-in-0:
+#        bookRegistered-in-0:
 #          destination: book.topic
 #          group: book
+#          contentType: application/json
 #          consumer:
-#            condition: "headers['type']=='BookAccessRequested'"
+#            condition: "headers['type']=='BookRegistered'"
+#
+#        bestsellerStatusChanged-in-0:
+#          destination: book.topic
+#          group: book
+#          contentType: application/json
+#          consumer:
+#            condition: "headers['type']=='BestsellerStatusChanged'"
+
 
         # 모든 이벤트를 발행하는 프로듀서
         bookEventProducer-out-0:
@@ -68,24 +65,15 @@ spring:
       on-profile: docker
   cloud:
     function:
-      definition: bookRegistered;bestsellerStatusChanged;wheneverBookAccessChecked_Route
-#      definition: bookEventConsumer;wheneverBookAccessRequested_CheckPolicy;wheneverBookAccessChecked_Route
+      definition: bookEventConsumer;wheneverBookAccessChecked_Route
+#      definition: bookRegistered;bestsellerStatusChanged;wheneverBookAccessChecked_Route
     stream:
       # 'default' 프로필과 동일하게 모든 바인딩을 설정하고, 토픽을 통일합니다.
       bindings:
-        bookRegistered-in-0:
-          destination: book.topic
+        bookEventConsumer-in-0:
+          destination: book.topic # <--- 수정 및 통일
           group: book
           contentType: application/json
-          consumer:
-            condition: "headers['type']=='BookRegistered'"
-
-        bestsellerStatusChanged-in-0:
-          destination: book.topic
-          group: book
-          contentType: application/json
-          consumer:
-            condition: "headers['type']=='BestsellerStatusChanged'"
 
         wheneverBookAccessChecked_Route-in-0:
           destination: book.topic # <--- 누락된 설정 추가
@@ -93,11 +81,20 @@ spring:
           consumer:
             condition: "headers['type']=='BookAccessChecked'"
 
-#        wheneverBookAccessRequested_CheckPolicy-in-0:
-#          destination: book.topic # <--- 누락된 설정 추가
+#        bookRegistered-in-0:
+#          destination: book.topic
 #          group: book
+#          contentType: application/json
 #          consumer:
-#            condition: "headers['type']=='BookAccessRequested'"
+#            condition: "headers['type']=='BookRegistered'"
+#
+#        bestsellerStatusChanged-in-0:
+#          destination: book.topic
+#          group: book
+#          contentType: application/json
+#          consumer:
+#            condition: "headers['type']=='BestsellerStatusChanged'"
+
 
         bookEventProducer-out-0:
           destination: book.topic # <--- 수정 및 통일
