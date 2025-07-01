@@ -1,11 +1,11 @@
 server:
   port: 8080
 
-spring:
-  application:
-    name: book
+openai:
+  api:
+    key: book-api
 ---
-
+# 'default' 프로필 설정
 spring:
   config:
     activate:
@@ -15,74 +15,181 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
-        implicit_naming_strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyComponentPathImpl
   cloud:
+    function:
+      definition: bookEventConsumer;wheneverBookAccessChecked_Route
+#      definition: bookRegistered;bestsellerStatusChanged;wheneverBookAccessChecked_Route
     stream:
+      # 모든 통신은 'book.topic'이라는 단일 토픽을 사용하도록 통일합니다.
+      bindings:
+        # 모든 이벤트를 로깅하는 컨슈머
+        bookEventConsumer-in-0:
+          destination: book.topic # <--- 'event-in'에서 수정
+          group: book
+          contentType: application/json
+
+        # BookAccessChecked 이벤트만 필터링하는 컨슈머
+        wheneverBookAccessChecked_Route-in-0:
+          destination: book.topic
+          group: book
+          consumer:
+            condition: "headers['type']=='BookAccessChecked'"
+
+#        bookRegistered-in-0:
+#          destination: book.topic
+#          group: book
+#          contentType: application/json
+#          consumer:
+#            condition: "headers['type']=='BookRegistered'"
+#
+#        bestsellerStatusChanged-in-0:
+#          destination: book.topic
+#          group: book
+#          contentType: application/json
+#          consumer:
+#            condition: "headers['type']=='BestsellerStatusChanged'"
+
+
+        # 모든 이벤트를 발행하는 프로듀서
+        bookEventProducer-out-0:
+          destination: book.topic
       kafka:
         binder:
           brokers: localhost:9092
-        streams:
-          binder:
-            configuration:
-              default:
-                key:
-                  serde: org.apache.kafka.common.serialization.Serdes$StringSerde
-                value:
-                  serde: org.apache.kafka.common.serialization.Serdes$StringSerde
-      bindings:
-        event-in:
-          group: book
-          #<<< EDA / Topic Name
-          destination: library
-          #>>> EDA / Topic Name
-          contentType: application/json
-        event-out:
-          #<<< EDA / Topic Name
-          destination: library
-          #>>> EDA / Topic Name
-          contentType: application/json
-
-logging:
-  level:
-    org.hibernate.type: trace
-    org.springframework.cloud: debug
-
-
-server:
-  port: 8084
 
 ---
-
+# 'docker' 프로필 설정
 spring:
   config:
     activate:
       on-profile: docker
-  jpa:
-    properties:
-      hibernate:
-        show_sql: true
-        format_sql: true
-        implicit_naming_strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyComponentPathImpl
   cloud:
+    function:
+      definition: bookEventConsumer;wheneverBookAccessChecked_Route
+#      definition: bookRegistered;bestsellerStatusChanged;wheneverBookAccessChecked_Route
     stream:
+      # 'default' 프로필과 동일하게 모든 바인딩을 설정하고, 토픽을 통일합니다.
+      bindings:
+        bookEventConsumer-in-0:
+          destination: book.topic # <--- 수정 및 통일
+          group: book
+          contentType: application/json
+
+        wheneverBookAccessChecked_Route-in-0:
+          destination: book.topic # <--- 누락된 설정 추가
+          group: book
+          consumer:
+            condition: "headers['type']=='BookAccessChecked'"
+
+#        bookRegistered-in-0:
+#          destination: book.topic
+#          group: book
+#          contentType: application/json
+#          consumer:
+#            condition: "headers['type']=='BookRegistered'"
+#
+#        bestsellerStatusChanged-in-0:
+#          destination: book.topic
+#          group: book
+#          contentType: application/json
+#          consumer:
+#            condition: "headers['type']=='BestsellerStatusChanged'"
+
+
+        bookEventProducer-out-0:
+          destination: book.topic # <--- 수정 및 통일
       kafka:
         binder:
-          brokers: my-kafka:9092
-        streams:
-          binder:
-            configuration:
-              default:
-                key:
-                  serde: org.apache.kafka.common.serialization.Serdes$StringSerde
-                value:
-                  serde: org.apache.kafka.common.serialization.Serdes$StringSerde
-      bindings:
-        event-in:
-          group: book
-          destination: library
-          contentType: application/json
-        event-out:
-          destination: library
-          contentType: application/json
+          # 쿠버네티스 내부 Kafka 서비스 주소
+          brokers: my-kafka.kafka.svc.cluster.local:9092
 
 
+
+#server:
+#  port: 8080
+#
+#spring:
+#  application:
+#    name: book
+#---
+#
+#spring:
+#  config:
+#    activate:
+#      on-profile: default
+#  jpa:
+#    properties:
+#      hibernate:
+#        show_sql: true
+#        format_sql: true
+#        implicit_naming_strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyComponentPathImpl
+#  cloud:
+#    stream:
+#      kafka:
+#        binder:
+#          brokers: localhost:9092
+#        streams:
+#          binder:
+#            configuration:
+#              default:
+#                key:
+#                  serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+#                value:
+#                  serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+#      bindings:
+#        event-in:
+#          group: book
+#          #<<< EDA / Topic Name
+#          destination: library
+#          #>>> EDA / Topic Name
+#          contentType: application/json
+#        event-out:
+#          #<<< EDA / Topic Name
+#          destination: library
+#          #>>> EDA / Topic Name
+#          contentType: application/json
+#
+#logging:
+#  level:
+#    org.hibernate.type: trace
+#    org.springframework.cloud: debug
+#
+#
+#server:
+#  port: 8084
+#
+#---
+#
+#spring:
+#  config:
+#    activate:
+#      on-profile: docker
+#  jpa:
+#    properties:
+#      hibernate:
+#        show_sql: true
+#        format_sql: true
+#        implicit_naming_strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyComponentPathImpl
+#  cloud:
+#    stream:
+#      kafka:
+#        binder:
+#          brokers: my-kafka:9092
+#        streams:
+#          binder:
+#            configuration:
+#              default:
+#                key:
+#                  serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+#                value:
+#                  serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+#      bindings:
+#        event-in:
+#          group: book
+#          destination: library
+#          contentType: application/json
+#        event-out:
+#          destination: library
+#          contentType: application/json
+#
+#
