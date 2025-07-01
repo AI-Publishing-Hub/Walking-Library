@@ -9,6 +9,7 @@ import member.library.infra.AbstractEvent;
 
 //<<< DDD / Domain Event
 @Data
+@EqualsAndHashCode(callSuper=false)
 @ToString
 public class ChargedPoint extends AbstractEvent {
 
