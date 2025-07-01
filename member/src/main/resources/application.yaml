@@ -1,22 +1,26 @@
 server:
-  port: 8080
+  port: 8082
 
 spring:
   application:
     name: member
----
 
+---
 spring:
   config:
     activate:
       on-profile: default
+
   jpa:
     properties:
       hibernate:
         show_sql: true
         format_sql: true
         implicit_naming_strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyComponentPathImpl
+
   cloud:
+    function:
+      definition: processEvent
     stream:
       kafka:
         binder:
@@ -30,16 +34,12 @@ spring:
                 value:
                   serde: org.apache.kafka.common.serialization.Serdes$StringSerde
       bindings:
-        event-in:
+        processEvent-in-0:
           group: member
-          #<<< EDA / Topic Name
           destination: library
-          #>>> EDA / Topic Name
           contentType: application/json
-        event-out:
-          #<<< EDA / Topic Name
+        processEvent-out-0:
           destination: library
-          #>>> EDA / Topic Name
           contentType: application/json
 
 logging:
@@ -47,23 +47,25 @@ logging:
     org.hibernate.type: trace
     org.springframework.cloud: debug
 
-
 server:
-  port: 8080
+  port: 8082
 
 ---
-
 spring:
   config:
     activate:
       on-profile: docker
+
   jpa:
     properties:
       hibernate:
         show_sql: true
         format_sql: true
         implicit_naming_strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyComponentPathImpl
+
   cloud:
+    function:
+      definition: processEvent
     stream:
       kafka:
         binder:
@@ -77,12 +79,10 @@ spring:
                 value:
                   serde: org.apache.kafka.common.serialization.Serdes$StringSerde
       bindings:
-        event-in:
+        processEvent-in-0:
           group: member
           destination: library
           contentType: application/json
-        event-out:
+        processEvent-out-0:
           destination: library
           contentType: application/json
-
-

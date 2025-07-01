@@ -1,0 +1,21 @@
+server:
+  port: 8088
+
+---
+
+spring:
+  profiles: default
+  cloud:
+    gateway:
+#<<< API Gateway / Routes
+      routes:
+        - id: book
+          uri: http://localhost:8082
+          predicates:
+            - Path=/books/**,
+        - id: author
+          uri: http://localhost:8083
+          predicates:
+            - Path=/authors/**,
+#>>> API Gateway / Routes
+    

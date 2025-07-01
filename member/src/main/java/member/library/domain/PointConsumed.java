@@ -14,9 +14,15 @@ public class PointConsumed extends AbstractEvent {
 
     private Long id;
     private Integer pointBalance;
+    private Integer consumedAmount;
+    private Date consumedAt;
 
     public PointConsumed(User aggregate) {
         super(aggregate);
+        this.id = aggregate.getId();
+        this.pointBalance = aggregate.getPointBalance();
+        this.consumedAmount = consumedAmount;
+        this.consumedAt = new Date();
     }
 
     public PointConsumed() {

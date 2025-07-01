@@ -22,6 +22,13 @@ public class SignedUp extends AbstractEvent {
 
     public SignedUp(User aggregate) {
         super(aggregate);
+        this.id = aggregate.getId();
+        this.name = aggregate.getName();
+        this.phoneNumber = aggregate.getPhoneNumber();
+        this.pointBalance = aggregate.getPointBalance();
+        this.createdAt = aggregate.getCreatedAt();
+        this.updatedAt = aggregate.getUpdatedAt();
+        this.isKtVerified = aggregate.getIsKtVerified();
     }
 
     public SignedUp() {
