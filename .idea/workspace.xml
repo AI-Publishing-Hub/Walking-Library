@@ -5,31 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="afdf7348-9466-429a-8dfb-21cd3a9cfb29" name="Changes" comment="feat: Update Kafka listener configuration for improved external access and adjust startup wait time">
-      <change afterPath="$PROJECT_DIR$/author/src/main/java/com/example/author/dto/AuthorDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gateway/src/main/java/com/example/gateway/GatewayApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/author/src/main/java/com/example/author/aggregate/Author.java" beforeDir="false" afterPath="$PROJECT_DIR$/author/src/main/java/com/example/author/aggregate/Author.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/author/src/main/java/com/example/author/application/AuthorApplicationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/author/src/main/java/com/example/author/application/AuthorApplicationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/author/src/main/java/com/example/author/command/ApproveAuthorRegistration.java" beforeDir="false" afterPath="$PROJECT_DIR$/author/src/main/java/com/example/author/command/ApproveAuthorRegistration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/author/src/main/java/com/example/author/command/RejectAuthorRegistration.java" beforeDir="false" afterPath="$PROJECT_DIR$/author/src/main/java/com/example/author/command/RejectAuthorRegistration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/author/src/main/java/com/example/author/command/RequestAuthorRegistration.java" beforeDir="false" afterPath="$PROJECT_DIR$/author/src/main/java/com/example/author/command/RequestAuthorRegistration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/author/src/main/java/com/example/author/config/KafkaConsumerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/author/src/main/java/com/example/author/config/KafkaConsumerConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/author/src/main/java/com/example/author/event/AuthorRegistrationApprovedEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/author/src/main/java/com/example/author/event/AuthorRegistrationApprovedEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/author/src/main/java/com/example/author/event/AuthorRegistrationRejectedEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/author/src/main/java/com/example/author/event/AuthorRegistrationRejectedEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/author/src/main/java/com/example/author/event/AuthorRegistrationRequestedEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/author/src/main/java/com/example/author/event/AuthorRegistrationRequestedEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/author/src/main/java/com/example/author/repository/AuthorRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/author/src/main/java/com/example/author/repository/AuthorRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/author/src/main/java/com/example/author/web/AuthorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/author/src/main/java/com/example/author/web/AuthorController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/book/src/main/java/book/infra/PolicyHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/book/src/main/java/book/infra/PolicyHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/book/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/src/main/java/compensation/application.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/member/src/main/java/member/MemberApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/member/src/main/java/member/MemberApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/member/src/main/java/member/library/config/KafkaStreamConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/member/src/main/java/member/library/config/KafkaStreamConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/member/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/member/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/member/src/main/java/member/library/controller/ExternalController.java" beforeDir="false" afterPath="$PROJECT_DIR$/member/src/main/java/member/library/controller/ExternalController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/member/src/main/java/member/library/domain/BookViewed.java" beforeDir="false" afterPath="$PROJECT_DIR$/member/src/main/java/member/library/domain/BookViewed.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/member/src/main/java/member/library/domain/ChargedPoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/member/src/main/java/member/library/domain/ChargedPoint.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/member/src/main/java/member/library/domain/PointConsumed.java" beforeDir="false" afterPath="$PROJECT_DIR$/member/src/main/java/member/library/domain/PointConsumed.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/member/src/main/java/member/library/domain/SignedUp.java" beforeDir="false" afterPath="$PROJECT_DIR$/member/src/main/java/member/library/domain/SignedUp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/member/src/main/java/member/library/domain/Subscribed.java" beforeDir="false" afterPath="$PROJECT_DIR$/member/src/main/java/member/library/domain/Subscribed.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/member/src/main/java/member/library/domain/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/member/src/main/java/member/library/domain/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/member/src/main/java/member/library/domain/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/member/src/main/java/member/library/domain/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/member/src/main/java/member/library/infra/AbstractEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/member/src/main/java/member/library/infra/AbstractEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/member/src/main/java/member/library/infra/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/member/src/main/java/member/library/infra/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/member/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/member/src/main/resources/application.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,7 +84,7 @@
     "Gradle.member [:member.MemberApplication.main()].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "main 병합 중",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/User/Desktop/study/5th_mini/Walking-Library/book/gradle/wrapper",
     "애플리케이션.GatewayApplication.executor": "Run"

@@ -11,6 +11,8 @@ import java.util.Map;
 import jakarta.persistence.*;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import member.MemberApplication;
 import member.library.domain.ChargedPoint;
 import member.library.domain.PointConsumed;
@@ -20,10 +22,11 @@ import member.library.domain.Subscribed;
 @Entity
 @Table(name = "User_table")
 @Data
-
+@Getter
+@Setter
 public class User{
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;

@@ -39,6 +39,8 @@ public class PolicyHandler {
                     book.setPrice(result.price());
                     book.setBookCoverUrl(result.bookCoverUrl());
 
+                    bookRepository.save(book);
+
                     event.setSummary(result.summary());
                     event.setPrice(result.price());
                     event.setBookCoverUrl(result.bookCoverUrl());

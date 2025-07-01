@@ -7,6 +7,7 @@ import member.library.domain.*;
 import member.library.infra.AbstractEvent;
 
 @Data
+@EqualsAndHashCode(callSuper=false)
 @ToString
 public class BookViewed extends AbstractEvent {
 
