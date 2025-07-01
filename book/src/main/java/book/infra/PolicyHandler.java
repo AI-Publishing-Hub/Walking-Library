@@ -46,6 +46,10 @@ public class PolicyHandler {
                     book.setBookCoverUrl(result.bookCoverUrl());
                     System.out.println(result.bookCoverUrl());
 
+                    event.setSummary(result.summary());
+                    event.setPrice(result.price());
+                    event.setBookCoverUrl(result.bookCoverUrl());
+
                     bookViewHandler.whenBookRegistered_then_createView(
                             event
                     );
