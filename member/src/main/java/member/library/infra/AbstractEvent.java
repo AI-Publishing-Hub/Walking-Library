@@ -34,22 +34,26 @@ public class AbstractEvent {
         /**
          * spring streams 방식
          */
-        KafkaProcessor processor = MemberApplication.applicationContext.getBean(
-            KafkaProcessor.class
-        );
-        MessageChannel outputChannel = processor.outboundTopic();
+        // KafkaProcessor processor = MemberApplication.applicationContext.getBean(
+        //     KafkaProcessor.class
+        // );
+        // MessageChannel outputChannel = processor.outboundTopic();
 
-        outputChannel.send(
-            MessageBuilder
-                .withPayload(this)
-                .setHeader(
-                    MessageHeaders.CONTENT_TYPE,
-                    MimeTypeUtils.APPLICATION_JSON
-                )
-                .setHeader("type", getEventType())
-                .build()
-        );
+        // outputChannel.send(
+        //     MessageBuilder
+        //         .withPayload(this)
+        //         .setHeader(
+        //             MessageHeaders.CONTENT_TYPE,
+        //             MimeTypeUtils.APPLICATION_JSON
+        //         )
+        //         .setHeader("type", getEventType())
+        //         .build()
+        // );
     }
+
+    @Autowired
+    @Transient
+    private EventPublisher eventPublisher;
 
     public void publishAfterCommit() {
         TransactionSynchronizationManager.registerSynchronization(
