@@ -5,18 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="afdf7348-9466-429a-8dfb-21cd3a9cfb29" name="Changes" comment="feat: Update Kafka listener configuration for improved external access and adjust startup wait time">
-      <change beforePath="$PROJECT_DIR$/book/src/main/java/book/infra/PolicyHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/book/src/main/java/book/infra/PolicyHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/member/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/member/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/member/src/main/java/member/library/controller/ExternalController.java" beforeDir="false" afterPath="$PROJECT_DIR$/member/src/main/java/member/library/controller/ExternalController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/member/src/main/java/member/library/domain/BookViewed.java" beforeDir="false" afterPath="$PROJECT_DIR$/member/src/main/java/member/library/domain/BookViewed.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/member/src/main/java/member/library/domain/ChargedPoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/member/src/main/java/member/library/domain/ChargedPoint.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/member/src/main/java/member/library/domain/PointConsumed.java" beforeDir="false" afterPath="$PROJECT_DIR$/member/src/main/java/member/library/domain/PointConsumed.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/member/src/main/java/member/library/domain/SignedUp.java" beforeDir="false" afterPath="$PROJECT_DIR$/member/src/main/java/member/library/domain/SignedUp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/member/src/main/java/member/library/domain/Subscribed.java" beforeDir="false" afterPath="$PROJECT_DIR$/member/src/main/java/member/library/domain/Subscribed.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/member/src/main/java/member/library/domain/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/member/src/main/java/member/library/domain/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/member/src/main/java/member/library/domain/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/member/src/main/java/member/library/domain/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/member/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/member/src/main/resources/application.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gateway/build.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gateway/settings.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/build/classes/java/main/com/example/gateway/GatewayApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/build/classes/java/main/com/example/gateway/GatewayApplication.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +25,9 @@
     <projectState path="$PROJECT_DIR$/book">
       <ProjectState />
     </projectState>
+    <projectState path="$PROJECT_DIR$/gateway">
+      <ProjectState />
+    </projectState>
     <projectState path="$PROJECT_DIR$/member">
       <ProjectState />
     </projectState>
@@ -39,7 +37,12 @@
       <state>
         <projects_view>
           <tree_state>
-            <expand />
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="book" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
             <select />
           </tree_state>
         </projects_view>
@@ -81,12 +84,14 @@
   "keyToString": {
     "Gradle.author [:com.example.author.AuthorApplication.main()].executor": "Run",
     "Gradle.book [:book.BookApplication.main()].executor": "Run",
+    "Gradle.gateway [:com.example.gateway.GatewayApplication.main()].executor": "Run",
     "Gradle.member [:member.MemberApplication.main()].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main 병합 중",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/User/Desktop/study/5th_mini/Walking-Library/book/gradle/wrapper",
+    "last_opened_file_path": "C:/Users/User/walkbook/Walking-Library/gateway",
     "애플리케이션.GatewayApplication.executor": "Run"
   }
 }]]></component>
@@ -95,7 +100,7 @@
       <recent name="C:\Users\User\Desktop\study\5th_mini\Walking-Library\book\gradle\wrapper" />
     </key>
   </component>
-  <component name="RunManager" selected="애플리케이션.MemberApplication">
+  <component name="RunManager" selected="애플리케이션.BookApplication">
     <configuration name="AuthorApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.author.AuthorApplication" />
       <module name="author.main" />
