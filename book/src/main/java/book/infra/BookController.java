@@ -26,6 +26,7 @@ public class BookController {
     public ResponseEntity<Book> createBook(@RequestBody Book book) {
         try {
             // 전달받은 book 객체를 저장합니다.
+
             Book savedBook = bookRepository.save(book);
             // @PostPersist에 의해 BookRegistered 이벤트가 발행됩니다.
             return new ResponseEntity<>(savedBook, HttpStatus.CREATED);

@@ -4,23 +4,26 @@ package book.infra;
 
 import book.domain.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.Message;
-
+import book.domain.*;
+import static book.domain.OpenAiService.*;
 import java.util.function.Consumer;
 
 // policy르 위한 것
 @Configuration
+@RequiredArgsConstructor
 public class PolicyHandler {
 
-    @Autowired
-    BookRepository bookRepository;
-    @Autowired
-    private BookViewHandler bookViewHandler;
-    @Autowired
-    private ObjectMapper objectMapper;
+    private final BookRepository bookRepository;
+    private final BookViewHandler bookViewHandler;
+    private final ObjectMapper objectMapper;
+
+    private final OpenAiService openAiService;
+
 
     @Bean
     public Consumer<Message<String>> bookEventConsumer() {
@@ -31,8 +34,20 @@ public class PolicyHandler {
             try {
                 // 주입받은 objectMapper를 사용하여 역직렬화를 수행합니다.
                 if ("BookRegistered".equals(eventType)) {
+
+                    BookRegistered event = objectMapper.readValue(message.getPayload(), BookRegistered.class);
+
+                    AiResult result = openAiService.analyzeBook(event);
+                    Book book = bookRepository.findById(event.getId()).orElseThrow();
+                    book.setSummary(result.summary());
+                    System.out.println(result.summary());
+                    book.setPrice(result.price());
+                    System.out.println(result.price());
+                    book.setBookCoverUrl(result.bookCoverUrl());
+                    System.out.println(result.bookCoverUrl());
+
                     bookViewHandler.whenBookRegistered_then_createView(
-                            objectMapper.readValue(message.getPayload(), BookRegistered.class)
+                            event
                     );
                 } else if ("BestsellerStatusChanged".equals(eventType)) {
                     bookViewHandler.whenBestsellerStatusChanged_then_updateView(
