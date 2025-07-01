@@ -20,8 +20,20 @@ public class SignedUp extends AbstractEvent {
     private Date updatedAt;
     private Boolean isKtVerified;
 
+    private final UserRepository userRepository;
+
     public SignedUp(User aggregate) {
         super(aggregate);
+
+        User user = new User();
+        user.setName(user.getName());
+        user.setPhoneNumber(user.getPhoneNumber());
+
+        User savedUser = userRepository.save(user);
+
+        SignedUp event = new SignedUp(savedUser);
+        event.publishAfterCommit(); 
+        return savedUser;
     }
 
     public SignedUp() {

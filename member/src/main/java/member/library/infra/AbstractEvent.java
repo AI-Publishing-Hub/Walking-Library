@@ -34,21 +34,21 @@ public class AbstractEvent {
         /**
          * spring streams 방식
          */
-        // KafkaProcessor processor = MemberApplication.applicationContext.getBean(
-        //     KafkaProcessor.class
-        // );
-        // MessageChannel outputChannel = processor.outboundTopic();
+        KafkaProcessor processor = MemberApplication.applicationContext.getBean(
+            KafkaProcessor.class
+        );
+        MessageChannel outputChannel = processor.outboundTopic();
 
-        // outputChannel.send(
-        //     MessageBuilder
-        //         .withPayload(this)
-        //         .setHeader(
-        //             MessageHeaders.CONTENT_TYPE,
-        //             MimeTypeUtils.APPLICATION_JSON
-        //         )
-        //         .setHeader("type", getEventType())
-        //         .build()
-        // );
+        outputChannel.send(
+            MessageBuilder
+                .withPayload(this)
+                .setHeader(
+                    MessageHeaders.CONTENT_TYPE,
+                    MimeTypeUtils.APPLICATION_JSON
+                )
+                .setHeader("type", getEventType())
+                .build()
+        );
     }
 
     public void publishAfterCommit() {
@@ -60,6 +60,8 @@ public class AbstractEvent {
                 }
             }
         );
+
+        EventPublisherHolder.getPublisher().publishEvent(this);
     }
 
     public String getEventType() {
