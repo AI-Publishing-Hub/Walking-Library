@@ -31,3 +31,38 @@
 .app-header nav a:hover {
     text-decoration: underline;
 }
+
+/* 기존 Header.css 내용 유지 */
+
+.app-header nav ul {
+    /* ... 기존 스타일 ... */
+    align-items: center; /* 추가: 버튼과 텍스트를 세로 중앙 정렬 */
+}
+
+.welcome-text {
+    color: #f0f0f0;
+    margin-right: 5px;
+    font-size: 0.9em;
+}
+
+.point-info {
+    color: #ffc107; /* 포인트 색상 강조 */
+    font-weight: bold;
+    font-size: 0.9em;
+}
+
+.logout-button {
+    background-color: #dc3545; /* 빨간색 계열 */
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease;
+    margin-left: 10px;
+}
+
+.logout-button:hover {
+    background-color: #c82333;
+}

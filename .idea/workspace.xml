@@ -5,14 +5,40 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="afdf7348-9466-429a-8dfb-21cd3a9cfb29" name="Changes" comment="feat: Update Kafka listener configuration for improved external access and adjust startup wait time">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/member.main.iml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/book/src/main/java/book/infra/PolicyHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/book/src/main/java/book/infra/PolicyHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/components/Header.css" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/components/Header.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/components/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/components/Header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/pages/BookDetail.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/pages/BookDetail.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/services/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/services/api.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$/author">
+      <ProjectState />
+    </projectState>
+    <projectState path="$PROJECT_DIR$/book">
+      <ProjectState />
+    </projectState>
+    <projectState path="$PROJECT_DIR$/member">
+      <ProjectState />
+    </projectState>
+  </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -35,15 +61,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;book__yunho&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/User/Desktop/study/5th_mini/Walking-Library/book/gradle/wrapper&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "front__test",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/User/Desktop/study/5th_mini/Walking-Library/book/gradle/wrapper"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\User\Desktop\study\5th_mini\Walking-Library\book\gradle\wrapper" />
@@ -106,8 +132,27 @@
       <option name="project" value="LOCAL" />
       <updated>1751279915591</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="feat: Update Kafka listener configuration for improved external access and adjust startup wait time">
+      <option name="closed" value="true" />
+      <created>1751371766347</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1751371766347</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Add Gitpod and Docker Compose configuration" />
@@ -117,6 +162,7 @@
     <MESSAGE value="feat: Update Gitpod configuration to enhance Gradle wrapper execution and project build process" />
     <MESSAGE value="feat: Add filtering conditions for book access event bindings in application.yaml" />
     <MESSAGE value="feat: Unify event topic and add filtering conditions for book access events in application.yaml" />
+    <MESSAGE value="add project configuration files and .gitignore" />
     <MESSAGE value="feat: Update Kafka listener configuration for improved external access and adjust startup wait time" />
     <option name="LAST_COMMIT_MESSAGE" value="feat: Update Kafka listener configuration for improved external access and adjust startup wait time" />
   </component>
