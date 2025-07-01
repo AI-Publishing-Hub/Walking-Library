@@ -2,23 +2,10 @@ package member.library.infra;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import jakarta.persistence.Transient;
 import member.MemberApplication;
-//import member.library.config.KafkaProcessor;
-
 import org.springframework.beans.BeanUtils;
-import org.springframework.messaging.MessageChannel;
-import org.springframework.messaging.MessageHeaders;
-import org.springframework.messaging.support.MessageBuilder;
-import org.springframework.transaction.support.TransactionSynchronizationAdapter;
-import org.springframework.transaction.support.TransactionSynchronizationManager;
-import org.springframework.util.MimeTypeUtils;
 
-
-
-//<<< Clean Arch / Outbound Adaptor
-public class AbstractEvent {
+public abstract class AbstractEvent {
 
     String eventType;
     Long timestamp;
@@ -33,73 +20,44 @@ public class AbstractEvent {
         this.timestamp = System.currentTimeMillis();
     }
 
-    public void publish() {
-        /**
-         * spring streams 방식
-         */
-        // KafkaProcessor processor = MemberApplication.applicationContext.getBean(
-        //     KafkaProcessor.class
-        // );
-        // MessageChannel outputChannel = processor.outboundTopic();
-
-        // outputChannel.send(
-        //     MessageBuilder
-        //         .withPayload(this)
-        //         .setHeader(
-        //             MessageHeaders.CONTENT_TYPE,
-        //             MimeTypeUtils.APPLICATION_JSON
-        //         )
-        //         .setHeader("type", getEventType())
-        //         .build()
-        // );
-    }
-    @Autowired
-    @Transient
-    private EventPublisher eventPublisher;
-
+    /**
+     * [수정된 부분]
+     * EventPublisher를 직접 필드로 갖는 대신,
+     * 필요할 때마다 Spring의 ApplicationContext에서 직접 가져와서 사용합니다.
+     */
     public void publishAfterCommit() {
-        String jsonPayload = serializeEvent(this);
-        eventPublisher.publishEvent(jsonPayload);
-    }
-    private String serializeEvent(Object event) {
-        try {
-            return new com.fasterxml.jackson.databind.ObjectMapper().writeValueAsString(event);
-        } catch (Exception e) {
-            throw new RuntimeException("Event serialization failed", e);
-        }
-    }
-
-    public String getEventType() {
-        return eventType;
-    }
-
-    public void setEventType(String eventType) {
-        this.eventType = eventType;
-    }
-
-    public Long getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(Long timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public boolean validate() {
-        return getEventType().equals(getClass().getSimpleName());
+        // ApplicationContext에서 EventPublisher Bean을 찾아옴
+        EventPublisher eventPublisher = MemberApplication.applicationContext.getBean(
+                EventPublisher.class
+        );
+        // 찾아온 Bean을 사용해서 이벤트 발행
+        eventPublisher.publishEvent(this.toJson());
     }
 
     public String toJson() {
         ObjectMapper objectMapper = new ObjectMapper();
         String json = null;
-
         try {
             json = objectMapper.writeValueAsString(this);
         } catch (JsonProcessingException e) {
             throw new RuntimeException("JSON format exception", e);
         }
-
         return json;
     }
+
+    public String getEventType() {
+        return eventType;
+    }
+    public void setEventType(String eventType) {
+        this.eventType = eventType;
+    }
+    public Long getTimestamp() {
+        return timestamp;
+    }
+    public void setTimestamp(Long timestamp) {
+        this.timestamp = timestamp;
+    }
+    public boolean validate() {
+        return getEventType().equals(getClass().getSimpleName());
+    }
 }
-//>>> Clean Arch / Outbound Adaptor

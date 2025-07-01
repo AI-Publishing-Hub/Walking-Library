@@ -29,8 +29,8 @@ public class KafkaConsumerConfig {
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
 
-        // JsonDeserializer: 도메인 이벤트 패키지를 신뢰하도록 지정
-        props.put(JsonDeserializer.TRUSTED_PACKAGES, "com.example.author.event.*");
+        // JsonDeserializer: 모든 패키지를 신뢰하도록 지정 (개발 환경에서만 사용)
+        props.put(JsonDeserializer.TRUSTED_PACKAGES, "*");
 
         return new DefaultKafkaConsumerFactory<>(props);
     }

@@ -5,12 +5,66 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="afdf7348-9466-429a-8dfb-21cd3a9cfb29" name="Changes" comment="feat: Update Kafka listener configuration for improved external access and adjust startup wait time">
+      <change afterPath="$PROJECT_DIR$/author/src/main/java/com/example/author/dto/AuthorDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gateway/src/main/java/com/example/gateway/GatewayApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/author/src/main/java/com/example/author/aggregate/Author.java" beforeDir="false" afterPath="$PROJECT_DIR$/author/src/main/java/com/example/author/aggregate/Author.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/author/src/main/java/com/example/author/application/AuthorApplicationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/author/src/main/java/com/example/author/application/AuthorApplicationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/author/src/main/java/com/example/author/command/ApproveAuthorRegistration.java" beforeDir="false" afterPath="$PROJECT_DIR$/author/src/main/java/com/example/author/command/ApproveAuthorRegistration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/author/src/main/java/com/example/author/command/RejectAuthorRegistration.java" beforeDir="false" afterPath="$PROJECT_DIR$/author/src/main/java/com/example/author/command/RejectAuthorRegistration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/author/src/main/java/com/example/author/command/RequestAuthorRegistration.java" beforeDir="false" afterPath="$PROJECT_DIR$/author/src/main/java/com/example/author/command/RequestAuthorRegistration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/author/src/main/java/com/example/author/config/KafkaConsumerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/author/src/main/java/com/example/author/config/KafkaConsumerConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/author/src/main/java/com/example/author/event/AuthorRegistrationApprovedEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/author/src/main/java/com/example/author/event/AuthorRegistrationApprovedEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/author/src/main/java/com/example/author/event/AuthorRegistrationRejectedEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/author/src/main/java/com/example/author/event/AuthorRegistrationRejectedEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/author/src/main/java/com/example/author/event/AuthorRegistrationRequestedEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/author/src/main/java/com/example/author/event/AuthorRegistrationRequestedEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/author/src/main/java/com/example/author/repository/AuthorRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/author/src/main/java/com/example/author/repository/AuthorRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/author/src/main/java/com/example/author/web/AuthorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/author/src/main/java/com/example/author/web/AuthorController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/book/src/main/java/book/infra/PolicyHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/book/src/main/java/book/infra/PolicyHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/book/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/book/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/src/main/java/compensation/application.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/member/src/main/java/member/MemberApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/member/src/main/java/member/MemberApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/member/src/main/java/member/library/config/KafkaStreamConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/member/src/main/java/member/library/config/KafkaStreamConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/member/src/main/java/member/library/domain/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/member/src/main/java/member/library/domain/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/member/src/main/java/member/library/infra/AbstractEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/member/src/main/java/member/library/infra/AbstractEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/member/src/main/java/member/library/infra/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/member/src/main/java/member/library/infra/UserController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$/author">
+      <ProjectState />
+    </projectState>
+    <projectState path="$PROJECT_DIR$/book">
+      <ProjectState />
+    </projectState>
+    <projectState path="$PROJECT_DIR$/member">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -31,23 +85,90 @@
   &quot;associatedIndex&quot;: 0
 }</component>
   <component name="ProjectId" id="2z4wpa1AvISClP2U6fjfABRPxxz" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;book__yunho&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/User/Desktop/study/5th_mini/Walking-Library/book/gradle/wrapper&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.author [:com.example.author.AuthorApplication.main()].executor": "Run",
+    "Gradle.book [:book.BookApplication.main()].executor": "Run",
+    "Gradle.member [:member.MemberApplication.main()].executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/User/Desktop/study/5th_mini/Walking-Library/book/gradle/wrapper",
+    "애플리케이션.GatewayApplication.executor": "Run"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\User\Desktop\study\5th_mini\Walking-Library\book\gradle\wrapper" />
     </key>
+  </component>
+  <component name="RunManager" selected="애플리케이션.MemberApplication">
+    <configuration name="AuthorApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.example.author.AuthorApplication" />
+      <module name="author.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.author.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BookApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="book.BookApplication" />
+      <module name="book.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="book.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GatewayApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.example.gateway.GatewayApplication" />
+      <module name="gateway.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.gateway.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MemberApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="member.MemberApplication" />
+      <module name="member.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="member.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="애플리케이션.GatewayApplication" />
+        <item itemvalue="애플리케이션.MemberApplication" />
+        <item itemvalue="애플리케이션.BookApplication" />
+        <item itemvalue="애플리케이션.AuthorApplication" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
