@@ -29,6 +29,7 @@ public class Book {
 
     private Integer price;
 
+    @Lob
     private String bookCoverUrl;
     private Long authorId;
 

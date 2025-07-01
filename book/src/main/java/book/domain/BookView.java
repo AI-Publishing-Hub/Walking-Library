@@ -22,6 +22,8 @@ public class BookView {
     private Long viewCount;
     private Long authorId;
     private Boolean isBestseller;
+
+    @Lob
     private String bookCoverUrl;
     private Integer price;
     private Boolean isBookPublished;
