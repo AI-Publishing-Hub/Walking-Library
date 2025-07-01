@@ -10,7 +10,10 @@ import java.util.List;
 import java.util.Map;
 import jakarta.persistence.*;
 
-import lombok.Data;
+import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import member.MemberApplication;
 import member.library.domain.ChargedPoint;
 import member.library.domain.PointConsumed;
@@ -22,7 +25,7 @@ import member.library.domain.Subscribed;
 @Getter
 @Setter
 @ToString
-public class User{
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -98,4 +101,5 @@ public class User{
         pointConsumed.publishAfterCommit();
     });
        
+    }
 }    

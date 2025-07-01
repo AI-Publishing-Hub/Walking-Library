@@ -6,7 +6,8 @@ import lombok.*;
 import member.library.domain.*;
 import member.library.infra.AbstractEvent;
 
-@Data
+@Getter
+@Setter
 @ToString
 public class BookViewed extends AbstractEvent {
 
@@ -20,15 +21,15 @@ public class BookViewed extends AbstractEvent {
     return memberId;
 }
 
+    @Builder
+    public BookViewed(Long id, Long memberId, Integer price) {
+        super();
+        this.id = id;
+        this.memberId = memberId;
+        this.price = price;
+        this.bookId = bookId;
+        this.viewedAt = viewedAt;
 }
 
-
-@Builder
-public BookViewed(Long id, Long memberId, Integer price) {
-    super();
-    this.id = id;
-    this.memberId = memberId;
-    this.price = price;
-    this.bookId = bookId;
-    this.viewedAt = viewedAt;
 }
+

@@ -8,7 +8,8 @@ import member.library.domain.*;
 import member.library.infra.AbstractEvent;
 
 //<<< DDD / Domain Event
-@Data
+@Getter
+@Setter
 @ToString
 public class ChargedPoint extends AbstractEvent {
 

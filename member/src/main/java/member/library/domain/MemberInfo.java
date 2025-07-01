@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 import jakarta.persistence.*;
 
-import lombok.Getter;
+import lombok.*;
 //<<< EDA / CQRS
 @Entity
 @Table(
@@ -55,4 +55,5 @@ public class MemberInfo {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.isKtVerified = isKtVerified;
+    }
 }

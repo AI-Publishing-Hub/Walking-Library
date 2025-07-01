@@ -4,11 +4,15 @@ import java.time.LocalDate;
 import java.util.*;
 
 import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 import member.library.domain.*;
 import member.library.infra.AbstractEvent;
 
 //<<< DDD / Domain Event
 @Data
+@Getter
+@Setter
 @ToString
 public class SignedUp extends AbstractEvent {
 

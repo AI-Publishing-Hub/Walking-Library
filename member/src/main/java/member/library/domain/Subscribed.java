@@ -2,13 +2,16 @@ package member.library.domain;
 
 import java.util.Date;
 import java.util.*;
-import lombok.Data;
+import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 import member.library.domain.*;
 import member.library.infra.AbstractEvent;
 
 //<<< DDD / Domain Event
-@Data
+@Getter
+@Setter
 @ToString
 public class Subscribed extends AbstractEvent {
 
