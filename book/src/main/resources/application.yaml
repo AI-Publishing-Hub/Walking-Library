@@ -4,7 +4,7 @@ server:
 # OpenAI API 키를 여기에 직접 입력하거나 환경 변수로 설정할 수 있습니다.
 openai:
   api:
-    key: "just-a-temporary-key" # <-- 아무런 의미 없는 임시 텍스트 키를 직접 입력
+    key: # <-- 아무런 의미 없는 임시 텍스트 키를 직접 입력
 
 ---
 # 'default' 프로필 설정 (로컬 개발 환경)
@@ -81,5 +81,4 @@ spring:
           destination: book.topic
       kafka:
         binder:
-          # 쿠버네티스나 도커 네트워크 내부의 Kafka 서비스 주소
-          brokers: my-kafka.kafka.svc.cluster.local:9092
+          brokers: my-kafka:9092

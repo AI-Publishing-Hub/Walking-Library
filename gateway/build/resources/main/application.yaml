@@ -1,29 +1,61 @@
 server:
-  port: 9000
+  port: 8080
 
 spring:
   application:
     name: gateway-service
+
+---
+spring:
+  config:
+    activate:
+      on-profile: default
+
   cloud:
     gateway:
       routes:
-        # (기존) Author 서비스로 가는 길 안내 규칙
         - id: author-route
           uri: http://localhost:8081
           predicates:
             - Path=/authors/**
 
-        # (기존) Book 서비스로 가는 길 안내 규칙
         - id: book-route
           uri: http://localhost:8080
           predicates:
             - Path=/books/**
 
-        # --- 이 부분을 새로 추가해주세요! ---
-        # Member 서비스로 가는 길 안내 규칙
         - id: member-route
-          uri: http://localhost:8082 # ★ 목적지: member 서비스는 8082 포트입니다.
+          uri: http://localhost:8082
           predicates:
-            - Path=/users/** # ★ 조건: /users/ 로 시작하는 모든 요청
+            - Path=/users/**
+          filters:
+            - RewritePath=/users/(?<segment>.*), /users/${segment}
+
+server:
+  port: 9000
+
+---
+spring:
+  config:
+    activate:
+      on-profile: docker
+
+  cloud:
+    gateway:
+      routes:
+        - id: author-route
+          uri: http://author:8080
+          predicates:
+            - Path=/authors/**
+
+        - id: book-route
+          uri: http://book:8080
+          predicates:
+            - Path=/books/**
+
+        - id: member-route
+          uri: http://member:8080
+          predicates:
+            - Path=/users/**
           filters:
             - RewritePath=/users/(?<segment>.*), /users/${segment}
