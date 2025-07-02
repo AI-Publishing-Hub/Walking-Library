@@ -1,6 +1,7 @@
 package book.infra;
 
 import book.domain.*;
+import book.dto.BookCreateRequest;
 import book.dto.BookDetailDto;
 import book.dto.BookSummaryDto;
 import java.util.List;
@@ -23,11 +24,16 @@ public class BookController {
     BookViewRepository bookViewRepository;
 
     @PostMapping
-    public ResponseEntity<Book> createBook(@RequestBody Book book) {
+    public ResponseEntity<Book> createBook(@RequestBody BookCreateRequest book) {
         try {
             // 전달받은 book 객체를 저장합니다.
 
-            Book savedBook = bookRepository.save(book);
+            Book newBook = new Book();
+            newBook.setTitle(book.getTitle());
+            newBook.setContent(book.getContent());
+            newBook.setAuthorId(book.getAuthorId());
+
+            Book savedBook = bookRepository.save(newBook);
             // @PostPersist에 의해 BookRegistered 이벤트가 발행됩니다.
             return new ResponseEntity<>(savedBook, HttpStatus.CREATED);
         } catch (Exception e) {

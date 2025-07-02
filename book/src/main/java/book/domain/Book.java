@@ -43,10 +43,9 @@ public class Book {
     public void onPrePersist() {
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
+        this.isBookPublished = false; // 기본값 설정
         this.viewCount = 0L;
-        if (this.isBestseller == null) {
-            this.isBestseller = false; // 기본값 설정
-        }
+        this.isBestseller = false; // 기본값 설정
     }
 
     @PreUpdate

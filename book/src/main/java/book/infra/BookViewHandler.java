@@ -14,22 +14,19 @@ public class BookViewHandler {
     @Autowired
     private BookViewRepository bookViewRepository;
 
-    public void whenBookRegistered_then_createView(BookRegistered event) {
-        if (event == null || !event.validate()) return;
+    public void whenBookRegistered_then_createView(Book book) {
+        if(book == null) return;
 
         BookView bookView = new BookView();
-        bookView.setId(event.getId());
-        bookView.setTitle(event.getTitle());
-        bookView.setContent(event.getContent());
-        bookView.setCreatedAt(event.getCreatedAt());
-        bookView.setPrice(event.getPrice());
-        bookView.setBookCoverUrl(event.getBookCoverUrl());
-        bookView.setAuthorId(event.getAuthorId());
-        bookView.setSummary(event.getSummary());
-        bookView.setIsBookPublished(event.getIsBookPublished());
-        // 초기값 설정
-        bookView.setViewCount(0L);
-        bookView.setIsBestseller(false);
+        bookView.setId(book.getId());
+        bookView.setTitle(book.getTitle());
+        bookView.setAuthorId(book.getAuthorId());
+        bookView.setIsBookPublished(book.getIsBookPublished());
+        bookView.setSummary(book.getSummary());
+        bookView.setPrice(book.getPrice());
+        bookView.setBookCoverUrl(book.getBookCoverUrl());
+        bookView.setIsBestseller(book.getIsBestseller());
+        bookView.setViewCount(book.getViewCount());
 
         bookViewRepository.save(bookView);
     }
