@@ -38,14 +38,14 @@ public class User{
     private role role;
 
     public enum role {
-    
-}
+        GENERAL, AUTHOR, ADMIN
+    }
 
     private SubscriptionStatus subscriptionStatus;
 
     public enum SubscriptionStatus {
-
-}
+        ACTIVE, INACTIVE
+    }
 
     private Date subscriptionStartAt;
 
@@ -72,6 +72,28 @@ public class User{
         return userRepository;
     }
     public static void consumePoints(BookViewed bookViewed) {
+        Long userId = bookViewed.getMemberId();
+        Integer price = bookViewed.getPrice();
+ 
+        repository().findById(userId).ifPresent(user -> {
+        // 포인트 잔액 확인하기(삼항연산자를 활용하여 확인이 안되면 0으로)
+        int currentBalance = user.getPointBalance() != null ? user.getPointBalance() : 0;
+ 
+        if (currentBalance >= price) {
+            user.setPointBalance(currentBalance - price);
+            user.setUpdatedAt(new Date());
+ 
+            repository().save(user);
+ 
+            PointConsumed pointConsumed = new PointConsumed(user);
+            pointConsumed.publishAfterCommit();
+        } else {
+            throw new RuntimeException("포인트가 부족합니다."); // 잔액이 부족할 경우 예외처리
+        }
+    });
+
+
+
         //implement business logic here:
 
         /** Example 1:  new item 
