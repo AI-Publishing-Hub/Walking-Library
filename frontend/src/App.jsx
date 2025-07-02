@@ -6,6 +6,7 @@ import Layout    from "./components/Layout";
 import HomePage  from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 
+
 export default function App() {
   const { user, login } = useAuth();          // ← 로그인 성공 콜백용
 
