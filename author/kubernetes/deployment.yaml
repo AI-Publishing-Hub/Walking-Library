@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: author
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: author
+  template:
+    metadata:
+      labels:
+        app: author
+    spec:
+      containers:
+        - name: author
+          image: project24.azurecr.io/author:v1
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
+              value: "kafka-service:9092"
