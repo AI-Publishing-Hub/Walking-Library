@@ -40,3 +40,20 @@
 .read-the-docs {
   color: #888;
 }
+
+/* src/App.css */
+
+/* ① 화면 전체를 감싸는 래퍼 – 콘텐트를 수평 중앙 정렬 */
+.page-wrap {
+  min-height: 100vh;          /* (필수) 화면 전체 높이 확보 */
+  display: flex;              /* Flex 컨테이너로 설정 */
+  justify-content: center;    /* 가로 가운데 */
+  align-items: flex-start;    /* 세로는 위에서부터(필요하면 center 로) */
+  padding-top: 40px;          /* 상단 여백 */
+}
+
+/* ② 실제 내부 페이지 폭 제한 */
+.page-inner {
+  width: 100%;
+  max-width: 800px;           /* 원하는 최대 폭 */
+}

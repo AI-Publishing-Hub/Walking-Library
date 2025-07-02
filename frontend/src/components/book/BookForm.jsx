@@ -7,6 +7,7 @@ function BookForm({ onBookCreated }) {
     title: '',
     content: '',
     authorId: 1,
+    isBookPublished: true
   });
   const [message, setMessage] = useState('');
 

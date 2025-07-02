@@ -1,0 +1,14 @@
+/* src/components/book/BookList.module.css */
+.grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+}
+
+/* ───── 미디어쿼리 : 600px 이하는 2열, 400px 이하는 1열 ───── */
+@media (max-width: 600px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 400px) {
+  .grid { grid-template-columns: 1fr; }
+}

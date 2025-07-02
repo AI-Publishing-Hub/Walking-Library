@@ -1,49 +1,38 @@
-import React, { useState, useEffect } from 'react'; // useEffect 임포트 추가
-import LoginPage from './LoginPage';
-import MainPage from './MainPage';
-import './App.css';
+// src/App.jsx
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 
-function App() {
-  // 사용자의 로그인 상태를 관리하는 상태
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [currentUser, setCurrentUser] = useState(null);
+import { useAuth } from "./contexts/AuthContext";  // (Provider는 main.jsx에서)
+import Layout    from "./components/Layout";
+import HomePage  from "./pages/HomePage";
+import LoginPage from "./pages/LoginPage";
 
-  // ★ 1. 컴포넌트가 처음 로드될 때 딱 한 번 실행되는 로직
-  useEffect(() => {
-    // 세션 저장소에서 '로그인 정보'를 확인합니다.
-    const loggedInData = sessionStorage.getItem('loggedInUser');
-    if (loggedInData) {
-      // 저장된 정보가 있다면, 그 정보로 로그인 상태를 복원합니다.
-      setIsLoggedIn(true);
-      setCurrentUser(JSON.parse(loggedInData));
-    }
-  }, []); // []가 비어있으면, 최초 1회만 실행됩니다.
+export default function App() {
+  const { user, login } = useAuth();   // 현재 로그인 상태 가져오기
+  const navigate = useNavigate();      // 페이지 전환용 훅
 
-  // 로그인 성공 시 호출될 함수
-  const handleLoginSuccess = (userData) => {
-    setIsLoggedIn(true);
-    setCurrentUser(userData);
-    // ★ 2. '로그인 정보'를 세션 저장소에 저장합니다.
-    sessionStorage.setItem('loggedInUser', JSON.stringify(userData));
-  };
-
-  // 로그아웃 시 호출될 함수
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    setCurrentUser(null);
-    // ★ 3. 세션 저장소에서 '로그인 정보'를 삭제합니다.
-    sessionStorage.removeItem('loggedInUser');
+  /**  로그인 성공 시:
+   *   1) 전역 상태에 사용자 저장
+   *   2) 루트(/) 로 이동                     */
+  const handleLoginSuccess = (u) => {
+    login(u);          // AuthContext에 저장
+    navigate("/");     // 메인으로!
   };
 
   return (
-    <div className="App">
-      {isLoggedIn ? (
-        <MainPage user={currentUser} onLogout={handleLogout} />
-      ) : (
-        <LoginPage onLoginSuccess={handleLoginSuccess} />
-      )}
-    </div>
+    <Layout>
+      <Routes>
+        {/* ① 로그인했으면 Home, 아니면 /login 으로 보냄 */}
+        <Route
+          path="/"
+          element={user ? <HomePage /> : <Navigate to="/login" replace />}
+        />
+
+        {/* ② 로그인 페이지 – 성공 시 handleLoginSuccess 호출 */}
+        <Route
+          path="/login"
+          element={<LoginPage onLoginSuccess={handleLoginSuccess} />}
+        />
+      </Routes>
+    </Layout>
   );
 }
-
-export default App;
