@@ -30,26 +30,19 @@ public class PolicyHandler {
                 if ("BookRegistered".equals(eventType)) {
                     BookRegistered event = objectMapper.readValue(message.getPayload(), BookRegistered.class);
 
-                    // --- [수정된 부분] AI 기능 호출 로직을 임시로 주석 처리합니다 ---
-                    /*
                     System.out.println("AI 분석을 시작합니다...");
                     AiResult result = openAiService.analyzeBook(event);
                     Book book = bookRepository.findById(event.getId()).orElseThrow();
                     book.setSummary(result.summary());
                     book.setPrice(result.price());
                     book.setBookCoverUrl(result.bookCoverUrl());
+                    book.setIsBookPublished(true); // 책을 출판 상태로 변경
 
-                    bookRepository.save(book);
+                    Book savedBook = bookRepository.save(book);
 
-                    event.setSummary(result.summary());
-                    event.setPrice(result.price());
-                    event.setBookCoverUrl(result.bookCoverUrl());
                     System.out.println("AI 분석이 완료되었습니다.");
-                    */
-                    // -----------------------------------------------------------
 
-                    // AI 분석 결과 없이, View 모델을 생성하는 로직만 남겨둡니다.
-                    bookViewHandler.whenBookRegistered_then_createView(event);
+                    bookViewHandler.whenBookRegistered_then_createView(savedBook);
 
                 } else if ("BestsellerStatusChanged".equals(eventType)) {
                     bookViewHandler.whenBestsellerStatusChanged_then_updateView(
