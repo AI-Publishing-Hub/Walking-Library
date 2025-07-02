@@ -27,6 +27,9 @@ public class BookViewHandler {
         bookView.setBookCoverUrl(book.getBookCoverUrl());
         bookView.setIsBestseller(book.getIsBestseller());
         bookView.setViewCount(book.getViewCount());
+        bookView.setCreatedAt(book.getCreatedAt());
+        bookView.setUpdatedAt(book.getUpdatedAt());
+        bookView.setContent(book.getContent());
 
         bookViewRepository.save(bookView);
     }
