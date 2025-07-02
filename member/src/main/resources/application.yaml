@@ -5,17 +5,21 @@ spring:
   application:
     name: member
 
+# -------------------------------
+# Default profile configuration
+# -------------------------------
 ---
 spring:
   config:
     activate:
       on-profile: default
+
   datasource:
     url: jdbc:h2:mem:testdb
     driver-class-name: org.h2.Driver
     username: sa
     password:
- 
+
   jpa:
     properties:
       hibernate:
@@ -29,7 +33,7 @@ spring:
     stream:
       kafka:
         binder:
-          brokers: localhost:9092
+          brokers: my-kafka:9092
         streams:
           binder:
             configuration:
@@ -52,14 +56,15 @@ logging:
     org.hibernate.type: trace
     org.springframework.cloud: debug
 
-server:
-  port: 8082
-
+# -------------------------------
+# Docker profile configuration
+# -------------------------------
 ---
 spring:
   config:
     activate:
       on-profile: docker
+
   jpa:
     properties:
       hibernate:

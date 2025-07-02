@@ -11,7 +11,7 @@ import member.library.domain.UserRepository;
 import member.library.domain.User.SubscriptionStatus;
 import member.library.domain.User.role;
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/external-users")
 @RequiredArgsConstructor
 public class ExternalController {
 
