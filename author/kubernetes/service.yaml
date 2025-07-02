@@ -3,9 +3,9 @@ kind: Service
 metadata:
   name: author-service
 spec:
-  type: ClusterIP
   selector:
     app: author
   ports:
-    - port: 80
-      targetPort: 8080
+    - protocol: TCP
+      port: 80          # 클러스터 내부에서 사용할 포트
+      targetPort: 8081  # 🔥 여기! Spring Boot 포트와 맞춰야 함
