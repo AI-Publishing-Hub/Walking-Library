@@ -1,25 +1,19 @@
-// src/components/book/BookCard.jsx
-import React from 'react';
-import styles from './BookCard.module.css';       // ← CSS Module import
+import { Link } from "react-router-dom";
+import "./BookCard.css";           // 스타일은 아래 2-3 단계에서
 
-function BookCard({ book }) {
+export default function BookCard({ book }) {
   return (
-    <div className={styles.card}>
-      {/* 책 표지 */}
+    <Link to={`/books/${book.id}`} className="card">
       <img
-        className={styles.cover}
-        src={book.bookCoverUrl || 'https://via.placeholder.com/150x200'}
+        src={book.bookCoverUrl || "https://via.placeholder.com/150x200"}
         alt={book.title}
+        className="cover"
       />
-
-      {/* 텍스트 영역 */}
-      <div className={styles.body}>
-        <h3 className={styles.title}>{book.title}</h3>
-        <p className={styles.meta}>작가 ID: {book.authorId}</p>
-        <p className={styles.price}>{book.price ?? 0} 포인트</p>
-      </div>
-    </div>
+      <h3>{book.title}</h3>
+      <p className="summary">
+        {book.summary ? book.summary.slice(0, 60) + "…" : "요약 준비 중…"}
+      </p>
+      <p className="price">{book.price ?? "-"} P</p>
+    </Link>
   );
 }
-
-export default BookCard;
