@@ -75,22 +75,22 @@ public class User{
         Long userId = bookViewed.getMemberId();
         Integer price = bookViewed.getPrice();
  
-        repository().findById(userId).ifPresent(user -> {
-        // 포인트 잔액 확인하기(삼항연산자를 활용하여 확인이 안되면 0으로)
-        int currentBalance = user.getPointBalance() != null ? user.getPointBalance() : 0;
+    //     repository().findById(userId).ifPresent(user -> {
+    //     // 포인트 잔액 확인하기(삼항연산자를 활용하여 확인이 안되면 0으로)
+    //     int currentBalance = user.getPointBalance() != null ? user.getPointBalance() : 0;
  
-        if (currentBalance >= price) {
-            user.setPointBalance(currentBalance - price);
-            user.setUpdatedAt(new Date());
+    //     if (currentBalance >= price) {
+    //         user.setPointBalance(currentBalance - price);
+    //         user.setUpdatedAt(new Date());
  
-            repository().save(user);
+    //         repository().save(user);
  
-            PointConsumed pointConsumed = new PointConsumed(user);
-            pointConsumed.publishAfterCommit();
-        } else {
-            throw new RuntimeException("포인트가 부족합니다."); // 잔액이 부족할 경우 예외처리
-        }
-    });
+    //         PointConsumed pointConsumed = new PointConsumed(user);
+    //         pointConsumed.publishAfterCommit();
+    //     } else {
+    //         throw new RuntimeException("포인트가 부족합니다."); // 잔액이 부족할 경우 예외처리
+    //     }
+    // });
 
 
 
