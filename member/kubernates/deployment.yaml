@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: member
-          image: "project24.azurecr.io/member:v1"
+          image: "project24.azurecr.io/member:v5"
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
