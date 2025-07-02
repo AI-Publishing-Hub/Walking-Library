@@ -1,56 +1,52 @@
 server:
   port: 8080
 
+# OpenAI API 키를 여기에 직접 입력하거나 환경 변수로 설정할 수 있습니다.
 openai:
   api:
-    key: book-api
+    key: "just-a-temporary-key" # <-- 아무런 의미 없는 임시 텍스트 키를 직접 입력
+
 ---
-# 'default' 프로필 설정
+# 'default' 프로필 설정 (로컬 개발 환경)
 spring:
   config:
     activate:
       on-profile: default
+
+  # --- 이 부분을 새로 추가하거나, 기존 datasource/h2 설정을 교체합니다 ---
+  h2:
+    console:
+      enabled: true           # H2 콘솔 기능을 켭니다.
+      path: /h2-console       # 콘솔 접속 경로입니다.
+  datasource:
+    url: jdbc:h2:mem:bookdb   # book 서비스의 DB에 'bookdb'라는 고정된 이름을 부여합니다.
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+  # ---------------------------------------------------------------------
+
   jpa:
     properties:
       hibernate:
         show_sql: true
         format_sql: true
+    hibernate:
+      ddl-auto: update # 애플리케이션 실행 시 Entity에 맞춰 테이블을 자동으로 변경/생성
+
   cloud:
     function:
       definition: bookEventConsumer;wheneverBookAccessChecked_Route
-#      definition: bookRegistered;bestsellerStatusChanged;wheneverBookAccessChecked_Route
     stream:
-      # 모든 통신은 'book.topic'이라는 단일 토픽을 사용하도록 통일합니다.
       bindings:
-        # 모든 이벤트를 로깅하는 컨슈머
         bookEventConsumer-in-0:
-          destination: book.topic # <--- 'event-in'에서 수정
+          destination: book.topic
           group: book
           contentType: application/json
-
-        # BookAccessChecked 이벤트만 필터링하는 컨슈머
         wheneverBookAccessChecked_Route-in-0:
           destination: book.topic
           group: book
           consumer:
             condition: "headers['type']=='BookAccessChecked'"
-
-#        bookRegistered-in-0:
-#          destination: book.topic
-#          group: book
-#          contentType: application/json
-#          consumer:
-#            condition: "headers['type']=='BookRegistered'"
-#
-#        bestsellerStatusChanged-in-0:
-#          destination: book.topic
-#          group: book
-#          contentType: application/json
-#          consumer:
-#            condition: "headers['type']=='BestsellerStatusChanged'"
-
-
-        # 모든 이벤트를 발행하는 프로듀서
         bookEventProducer-out-0:
           destination: book.topic
       kafka:
@@ -58,138 +54,32 @@ spring:
           brokers: localhost:9092
 
 ---
-# 'docker' 프로필 설정
+# 'docker' 프로필 설정 (도커 컨테이너 환경)
 spring:
   config:
     activate:
       on-profile: docker
+
+  # 도커 환경에서는 H2 대신 실제 DB(예: PostgreSQL, MySQL)를 사용하도록
+  # 여기에 datasource 설정을 추가할 수 있습니다. 지금은 비워둡니다.
+
   cloud:
     function:
       definition: bookEventConsumer;wheneverBookAccessChecked_Route
-#      definition: bookRegistered;bestsellerStatusChanged;wheneverBookAccessChecked_Route
     stream:
-      # 'default' 프로필과 동일하게 모든 바인딩을 설정하고, 토픽을 통일합니다.
       bindings:
         bookEventConsumer-in-0:
-          destination: book.topic # <--- 수정 및 통일
+          destination: book.topic
           group: book
           contentType: application/json
-
         wheneverBookAccessChecked_Route-in-0:
-          destination: book.topic # <--- 누락된 설정 추가
+          destination: book.topic
           group: book
           consumer:
             condition: "headers['type']=='BookAccessChecked'"
-
-#        bookRegistered-in-0:
-#          destination: book.topic
-#          group: book
-#          contentType: application/json
-#          consumer:
-#            condition: "headers['type']=='BookRegistered'"
-#
-#        bestsellerStatusChanged-in-0:
-#          destination: book.topic
-#          group: book
-#          contentType: application/json
-#          consumer:
-#            condition: "headers['type']=='BestsellerStatusChanged'"
-
-
         bookEventProducer-out-0:
-          destination: book.topic # <--- 수정 및 통일
+          destination: book.topic
       kafka:
         binder:
-          # 쿠버네티스 내부 Kafka 서비스 주소
+          # 쿠버네티스나 도커 네트워크 내부의 Kafka 서비스 주소
           brokers: my-kafka.kafka.svc.cluster.local:9092
-
-
-
-#server:
-#  port: 8080
-#
-#spring:
-#  application:
-#    name: book
-#---
-#
-#spring:
-#  config:
-#    activate:
-#      on-profile: default
-#  jpa:
-#    properties:
-#      hibernate:
-#        show_sql: true
-#        format_sql: true
-#        implicit_naming_strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyComponentPathImpl
-#  cloud:
-#    stream:
-#      kafka:
-#        binder:
-#          brokers: localhost:9092
-#        streams:
-#          binder:
-#            configuration:
-#              default:
-#                key:
-#                  serde: org.apache.kafka.common.serialization.Serdes$StringSerde
-#                value:
-#                  serde: org.apache.kafka.common.serialization.Serdes$StringSerde
-#      bindings:
-#        event-in:
-#          group: book
-#          #<<< EDA / Topic Name
-#          destination: library
-#          #>>> EDA / Topic Name
-#          contentType: application/json
-#        event-out:
-#          #<<< EDA / Topic Name
-#          destination: library
-#          #>>> EDA / Topic Name
-#          contentType: application/json
-#
-#logging:
-#  level:
-#    org.hibernate.type: trace
-#    org.springframework.cloud: debug
-#
-#
-#server:
-#  port: 8084
-#
-#---
-#
-#spring:
-#  config:
-#    activate:
-#      on-profile: docker
-#  jpa:
-#    properties:
-#      hibernate:
-#        show_sql: true
-#        format_sql: true
-#        implicit_naming_strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyComponentPathImpl
-#  cloud:
-#    stream:
-#      kafka:
-#        binder:
-#          brokers: my-kafka:9092
-#        streams:
-#          binder:
-#            configuration:
-#              default:
-#                key:
-#                  serde: org.apache.kafka.common.serialization.Serdes$StringSerde
-#                value:
-#                  serde: org.apache.kafka.common.serialization.Serdes$StringSerde
-#      bindings:
-#        event-in:
-#          group: book
-#          destination: library
-#          contentType: application/json
-#        event-out:
-#          destination: library
-#          contentType: application/json
-#
-#

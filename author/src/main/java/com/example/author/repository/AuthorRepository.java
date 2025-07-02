@@ -4,10 +4,8 @@ import com.example.author.aggregate.Author;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.UUID;
+import java.util.UUID; // 이 import는 이제 필요 없습니다.
 
 @Repository
-public interface AuthorRepository extends JpaRepository<Author, UUID> {
-    // JpaRepository가 기본 CRUD 메서드를 모두 제공
-    // 필요하다면 메서드 시그니처를 여기에 추가 가능
+public interface AuthorRepository extends JpaRepository<Author, String> { // ★ UUID에서 String으로 변경
 }
