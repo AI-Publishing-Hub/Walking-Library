@@ -16,8 +16,11 @@ public class ChargedPoint extends AbstractEvent {
     private Long id;
     private Integer pointBalance;
 
-    public ChargedPoint(User aggregate) {
+    public ChargedPoint(User aggregate, int amount) {
         super(aggregate);
+        this.id = aggregate.getId();
+        this.chargedAmount = amount;
+        this.pointBalance = aggregate.getPointBalance();
     }
 
     public ChargedPoint() {
