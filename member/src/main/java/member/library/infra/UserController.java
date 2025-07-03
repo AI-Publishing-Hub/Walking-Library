@@ -27,4 +27,26 @@ public class UserController {
         User savedUser = userRepository.save(user);
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
+
+    // @PostMapping("/{id}/charge")
+    // public String chargePoints(@PathVariable Long id, @RequestBody ChargedPoint chargedPoint) {
+    //     int amount = chargedPoint.getChargedAmount();
+    //     User user = new User();
+    //     user = userRepository.findById(id);
+    //     user.chargePoint(amount);
+    //     userRepository.save(user);
+        
+    //     return "충전 완료";
+    // }
+
+    // @PostMapping("/{id}/subscribe")
+    // public String subscribe(@PathVariable Long id, @RequestBody Subscribed subscribed) {
+
+    //     int days = 30;
+
+    //     user.subscribe(days);
+    //     userRepository.save(user);
+
+    //     return "구독 완료";
+    }
 }
