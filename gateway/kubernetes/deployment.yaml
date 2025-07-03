@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
         - name: gateway
-          image: project24.azurecr.io/gateway:v1
+          image: project24.azurecr.io/gateway:v3
           ports:
             - containerPort: 8080

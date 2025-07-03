@@ -57,5 +57,11 @@ spring:
           uri: http://member:8080
           predicates:
             - Path=/users/**
-          filters:
-            - RewritePath=/users/(?<segment>.*), /users/${segment}
+
+        - id: frontend-route
+          uri: http://frontend:8080
+          predicates:
+            - Path=/**
+
+          # filters:
+          #   - RewritePath=/users/(?<segment>.*), /users/${segment}
