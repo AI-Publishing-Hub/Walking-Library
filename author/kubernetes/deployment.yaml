@@ -14,9 +14,9 @@ spec:
     spec:
       containers:
         - name: author
-          image: project24.azurecr.io/author:v1
+          image: project24.azurecr.io/author:v6
           ports:
             - containerPort: 8080
           env:
-            - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
-              value: "kafka-service:9092"
+            - name: SPRING_PROFILES_ACTIVE
+              value: "docker"

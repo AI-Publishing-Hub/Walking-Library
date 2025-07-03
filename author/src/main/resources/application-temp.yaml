@@ -1,0 +1,168 @@
+# # 📂 1. 공통
+# server:
+#   port: 8080
+
+# spring:
+#   application.name: author
+#   h2.console.enabled: true
+#   h2.console.path: /h2-console
+
+#   datasource:
+#     url: jdbc:h2:mem:testdb
+#     driverClassName: org.h2.Driver
+#     username: sa
+
+#   jpa:
+#     hibernate.ddl-auto: update
+#     show-sql: true
+#     properties.hibernate.format_sql: true
+
+#   cloud.stream:
+#     default-binder: kafka
+#     bindings:
+#       authorRequested-out-0.destination: author.registration.requested
+#       authorApproved-out-0.destination: author.registration.approved
+#       authorRejected-out-0.destination: author.registration.rejected
+#     kafka.binder.configuration.enable.idempotence: true
+
+# ---
+# # 📝 2. 로컬(default)
+# spring:
+#   config.activate.on-profile: default
+#   kafka.bootstrap-servers: localhost:9092
+#   cloud.stream.kafka.binder.brokers: localhost:9092
+
+# ---
+# # 🐳 3. 컨테이너(docker)
+# spring:
+#   config:
+#     activate:
+#       on-profile: docker
+#   kafka.bootstrap-servers: my-kafka:9092
+#   cloud.stream.kafka.binder.brokers: my-kafka:9092
+
+server:
+  port: 8080
+ 
+---
+# 'default' 프로필 설정 (로컬 개발 환경)
+spring:
+  config:
+    activate:
+      on-profile: default
+ 
+  # --- 이 부분을 새로 추가하거나, 기존 datasource/h2 설정을 교체합니다 ---
+  h2:
+    console:
+      enabled: true           # H2 콘솔 기능을 켭니다.
+      path: /h2-console       # 콘솔 접속 경로입니다.
+  datasource:
+    url: jdbc:h2:mem:bookdb   # book 서비스의 DB에 'bookdb'라는 고정된 이름을 부여합니다.
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+  # ---------------------------------------------------------------------
+ 
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+    hibernate:
+      ddl-auto: update # 애플리케이션 실행 시 Entity에 맞춰 테이블을 자동으로 변경/생성
+ 
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: author-service
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "com.example.author.event.*"
+    listener:
+      missing-topics-fatal: false   # 토픽이 아직 없을 때 오류 방지
+
+  cloud:
+    stream:
+      default-binder: kafka
+      bindings:
+        authorRequested-out-0:
+          destination: author.registration.requested
+        authorApproved-out-0:
+          destination: author.registration.approved
+        authorRejected-out-0:
+          destination: author.registration.rejected
+      kafka:
+        binder:
+          brokers: localhost:9092
+          configuration:
+            enable.idempotence: true
+ 
+---
+
+
+spring:
+  config:
+    activate:
+      on-profile: docker   # 또는 "k8s", "prod" 등 쿠버네티스 전용 프로필
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  datasource:
+    url: jdbc:h2:mem:bookdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+    hibernate:
+      ddl-auto: update
+
+  kafka:
+    bootstrap-servers: my-kafka:9092   # 쿠버네티스 환경용 Kafka 서비스 주소
+    consumer:
+      group-id: author-service
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "com.example.author.event.*"
+    listener:
+      missing-topics-fatal: false
+
+  cloud:
+    stream:
+      default-binder: kafka
+      bindings:
+        authorRequested-out-0:
+          destination: author.registration.requested
+        authorApproved-out-0:
+          destination: author.registration.approved
+        authorRejected-out-0:
+          destination: author.registration.rejected
+      kafka:
+        binder:
+          brokers: my-kafka:9092
+          configuration:
+            enable.idempotence: true
+
+  # cloud:
+  #   function:
+  #     definition: bookEventConsumer;wheneverBookAccessChecked_Route
+  #   stream:
+  #     default-binder: kafka
+  #     bindings:
+  #       authorRequested-out-0.destination: author.registration.requested
+  #       authorApproved-out-0.destination: author.registration.approved
+  #       authorRejected-out-0.destination: author.registration.rejected
+  #     kafka.binder.configuration.enable.idempotence: true
+  #     kafka:
+  #       binder:
+  #         brokers: my-kafka:9092
