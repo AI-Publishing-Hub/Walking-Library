@@ -6,5 +6,5 @@ spec:
   selector:
     app: author
   ports:
-    - port: 80
+    - port: 8080
       targetPort: 8080  # ← Dockerfile, Deployment, Gateway 모두와 일치시킴
