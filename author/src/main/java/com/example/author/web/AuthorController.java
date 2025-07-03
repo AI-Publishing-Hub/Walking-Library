@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID; // 이 import는 이제 필요 없습니다.
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/authors")
@@ -15,18 +15,24 @@ public class AuthorController {
 
     private final AuthorApplicationService service;
 
-    @PostMapping("/register")
-    public void register(@RequestBody RequestAuthorRegistration req) {
+    // ① 작가 등록 요청
+    @PostMapping
+    public ResponseEntity<Void> register(@RequestBody RequestAuthorRegistration req) {
         service.requestRegistration(req);
+        return ResponseEntity.accepted().build();
     }
 
+    // ② 승인
     @PostMapping("/{id}/approve")
-    public void approve(@PathVariable String id) { // ★ UUID에서 String으로 변경
+    public ResponseEntity<Void> approve(@PathVariable UUID id) {
         service.approveRegistration(new ApproveAuthorRegistration(id));
+        return ResponseEntity.ok().build();
     }
 
+    // ③ 반려
     @PostMapping("/{id}/reject")
-    public void reject(@PathVariable String id) { // ★ UUID에서 String으로 변경
+    public ResponseEntity<Void> reject(@PathVariable UUID id) {
         service.rejectRegistration(new RejectAuthorRegistration(id));
+        return ResponseEntity.ok().build();
     }
 }

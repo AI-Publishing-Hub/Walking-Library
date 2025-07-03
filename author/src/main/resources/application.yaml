@@ -1,47 +1,50 @@
+# ✅ [공통 설정] (모든 환경 공통)
 server:
-  port: 8081
+  port: 8080
 
+---
+
+# ✅ [로컬 개발 환경: default 프로필]
 spring:
-  application:
-    name: author
+  config:
+    activate:
+      on-profile: default
 
-  # ─── 내장 H2 DB ────────────────────────────────────────────────
   h2:
     console:
       enabled: true
       path: /h2-console
 
   datasource:
-    url: jdbc:h2:mem:testdb
+    url: jdbc:h2:mem:bookdb
     driverClassName: org.h2.Driver
     username: sa
     password:
 
   jpa:
-    hibernate:
-      ddl-auto: update
     properties:
       hibernate:
+        show_sql: true
         format_sql: true
-    show-sql: true
+    hibernate:
+      ddl-auto: update
 
-  # ─── Kafka & Cloud Stream ────────────────────────────────────
   kafka:
     bootstrap-servers: localhost:9092
-    producer:
-      # Kafka 트랜잭션 활성화 (ID prefix만 있으면 됨)
-      transaction-id-prefix: author-tx-
-      retries: 3
-      properties:
-        enable.idempotence: true    # Exactly-Once 보장
     consumer:
+      group-id: author-service
       auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "com.example.author.event.*"
+    listener:
+      missing-topics-fatal: false
 
   cloud:
     stream:
       default-binder: kafka
       bindings:
-        # → “보내는 쪽”(StreamBridge 사용)을 위한 플레이스홀더
         authorRequested-out-0:
           destination: author.registration.requested
         authorApproved-out-0:
@@ -54,6 +57,57 @@ spring:
           configuration:
             enable.idempotence: true
 
-logging:
-  level:
-    org.hibernate.type.descriptor.sql: trace
+---
+
+# ✅ [도커/쿠버네티스 환경: docker 프로필]
+spring:
+  config:
+    activate:
+      on-profile: docker
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  datasource:
+    url: jdbc:h2:mem:bookdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+    hibernate:
+      ddl-auto: update
+
+  kafka:
+    bootstrap-servers: my-kafka:9092
+    consumer:
+      group-id: author-service
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "com.example.author.event.*"
+    listener:
+      missing-topics-fatal: false
+
+  cloud:
+    stream:
+      default-binder: kafka
+      bindings:
+        authorRequested-out-0:
+          destination: author.registration.requested
+        authorApproved-out-0:
+          destination: author.registration.approved
+        authorRejected-out-0:
+          destination: author.registration.rejected
+      kafka:
+        binder:
+          brokers: my-kafka:9092
+          configuration:
+            enable.idempotence: true

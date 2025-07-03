@@ -1,15 +1,17 @@
 package com.example.author.command;
 
-import lombok.Getter;
-import java.util.UUID; // 이 import는 이제 필요 없습니다.
+import java.util.UUID;
 
-@Getter
 public class RejectAuthorRegistration {
-    private String id; // ★ UUID에서 String으로 변경
+    private UUID id;
 
     public RejectAuthorRegistration() {}
 
-    public RejectAuthorRegistration(String id) { // ★ UUID에서 String으로 변경
+    public RejectAuthorRegistration(UUID id) {
         this.id = id;
+    }
+
+    public UUID getId() {
+        return id;
     }
 }
