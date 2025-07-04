@@ -5,11 +5,10 @@ import com.example.author.aggregate.AuthorStatus;
 import lombok.Value;
 
 import java.time.Instant;
-import java.util.UUID; // 이 import는 이제 필요 없습니다.
 
 @Value
 public class AuthorDto {
-    String id; // ★ UUID에서 String으로 변경
+    String id;
     String name;
     String description;
     String portfolio;
@@ -18,7 +17,7 @@ public class AuthorDto {
 
     public static AuthorDto from(Author author) {
         return new AuthorDto(
-                author.getId(),
+                author.getId().toString(),  // ✅ 이 부분만 수정
                 author.getName(),
                 author.getDescription(),
                 author.getPortfolio(),
