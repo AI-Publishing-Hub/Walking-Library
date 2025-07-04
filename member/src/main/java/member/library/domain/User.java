@@ -71,8 +71,8 @@ public class User{
         );
         return userRepository;
     }
-    // // 구독로직
-    // // 구독 기간 시작
+    // // // 구독로직
+    // // // 구독 기간 시작
     // public void subscribe(int days) {
     //     this.subscriptionStatus = SubscriptionStatus.ACTIVE;
     //     this.subscriptionStartAt = new Date();
@@ -80,14 +80,14 @@ public class User{
     //     this.updatedAt = new Date();
     // }
 
-    // // 구독 기간 끝
+    // // // 구독 기간 끝
     // public void unsubscribe() {
     //     this.subscriptionStatus = SubscriptionStatus.INACTIVE;
     //     this.subscriptionEndAt = new Date();
     //     this.updatedAt = new Date();
     // }
 
-    // //포인트 충전 로직
+    // // //포인트 충전 로직
     // public void chargePoint(int amount) {
     // if (this.pointBalance == null) this.pointBalance = 0;
     // this.pointBalance += amount;

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import member.library.domain.*;
 
 @RestController
 @RequestMapping(value="/users")
@@ -32,7 +33,8 @@ public class UserController {
     // public String chargePoints(@PathVariable Long id, @RequestBody ChargedPoint chargedPoint) {
     //     int amount = chargedPoint.getChargedAmount();
     //     User user = new User();
-    //     user = userRepository.findById(id);
+    //     user = userRepository.findById(id).orElseThrow(
+    //         () -> new EntityNotFoundException("User not found with id: " + id));
     //     user.chargePoint(amount);
     //     userRepository.save(user);
         
@@ -48,5 +50,5 @@ public class UserController {
     //     userRepository.save(user);
 
     //     return "구독 완료";
-    }
+    // }
 }
