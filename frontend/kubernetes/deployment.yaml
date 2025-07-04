@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: project24.azurecr.io/frontend:v2
+          image: project24.azurecr.io/frontend:latest
           ports:
             - containerPort: 8080
