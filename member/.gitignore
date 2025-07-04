@@ -81,4 +81,3 @@ secrets.yml
 node_modules
 .dist/
 .pem
-!member/build/libs/member-0.0.1-SNAPSHOT.jar
